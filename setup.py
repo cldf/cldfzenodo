@@ -22,6 +22,7 @@ setup(
     install_requires=[
         'pycldf>=1.23.0',
         'html5lib',
+        'nameparser',
         'attrs',
     ],
     extras_require={

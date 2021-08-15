@@ -15,7 +15,9 @@ import urllib.request
 
 import attr
 import html5lib
-from pycldf import iter_datasets
+import nameparser
+from clldutils import licenses
+from pycldf import iter_datasets, Source
 
 __all__ = ['Record', 'GithubRepos']
 
@@ -77,12 +79,26 @@ def get_doi(doi_or_url):
     return url.path[1:]
 
 
+def get_creators(names):
+    res = []
+    for name in names:
+        name = nameparser.HumanName(name)
+        first = name.first
+        if name.middle:
+            first += ' ' + name.middle
+        res.append('{}, {}'.format(name.last, first))
+    return res
+
+
 @attr.s
 class Record:
     doi = attr.ib(
         converter=get_doi,
         validator=attr.validators.matches_re(r'10\.5281/zenodo\.[0-9]+'))
     title = attr.ib()
+    creators = attr.ib(converter=get_creators, default=attr.Factory(list))
+    year = attr.ib(default=None)
+    license = attr.ib(default=None)
     download_url = attr.ib(default=None)
     keywords = attr.ib(default=attr.Factory(list))
     communities = attr.ib(default=attr.Factory(list), converter=lambda l: [i for i in l if i])
@@ -103,10 +119,10 @@ class Record:
             pref, _, lname = name.partition(':')
             return "{%s}%s" % (NS[pref], lname)
 
-        def get(qname, attribute=None):
+        def get(qname, attribute=None, parent=None):
             return [
                 ee.attrib[qn(attribute)] if attribute else ee
-                for ee in e.findall('.//{}'.format(qn(qname)))
+                for ee in (parent or e).findall('.//{}'.format(qn(qname)))
                 if not attribute or (ee.attrib.get(qn(attribute)))]
 
         def id_from_zenodo_url(url, type_='record'):
@@ -118,11 +134,25 @@ class Record:
         kw = dict(
             doi=get('rdf:Description', 'rdf:about')[0],
             title=get('dct:title')[0].text,
-            # download_url=get('dcat:downloadURL', 'rdf:resource')[0],
+            year=get('dct:issued')[0].text.split('-')[0],
             keywords=[ee.text for ee in get('dcat:keyword')],
             communities=[
                 id_from_zenodo_url(t, 'communities') for t in get('dct:isPartOf', 'rdf:resource')],
         )
+        license = get('dct:license', 'rdf:resource')
+        if license:
+            kw['license'] = license[0]
+        creators = []
+        for c in get('dct:creator'):
+            family = get('foaf:familyName', parent=c)
+            if family:
+                creators.append(
+                    '{}, {}'.format(family[0].text, get('foaf:givenName', parent=c)[0].text))
+            else:
+                name = get('foaf:name', parent=c)
+                assert name
+                creators.append(name[0].text)
+        kw['creators'] = creators
         for dl in get('dcat:downloadURL', 'rdf:resource'):
             kw['download_url'] = dl
             break
@@ -189,6 +219,24 @@ class Record:
             for ds in iter_datasets(self.download(tmpdirname, log=log)):
                 if (condition is None) or condition(ds):
                     return ds.copy(dest, mdname=mdname)
+
+    @property
+    def bibtex(self):
+        src = Source(
+            'misc',
+            self.doi.split('/')[-1].replace('.', '-'),
+            author=' and '.join(self.creators),
+            title=self.title,
+            keywords=', '.join(self.keywords),
+            publisher='Zenodo',
+            year=self.year,
+            doi=self.doi,
+            url='https://doi.org/{}'.format(self.doi),
+        )
+        if self.license:
+            lic = licenses.find(self.license)
+            src['copyright'] = lic.name if lic else self.license
+        return src.bibtex()
 
     @property
     def citation(self):

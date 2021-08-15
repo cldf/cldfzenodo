@@ -22,7 +22,7 @@ def test_GithubRepos():
     assert repo.release_url
 
 
-def test_Record():
+def test_Record(record):
     with pytest.raises(ValueError):
         _ = Record(doi='x', title='x')
 
@@ -31,6 +31,7 @@ def test_Record():
 
     rec = Record(doi='https://doi.org/10.5281/zenodo.4691101', title='', closed_access=True)
     assert rec.id == '4691101'
+    assert 'Greenhill, Simon J. and Haynie, Hannah J.' in record.bibtex
 
 
 def test_Record_from_dcat(record):

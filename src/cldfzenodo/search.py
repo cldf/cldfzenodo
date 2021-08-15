@@ -22,6 +22,9 @@ class Results(RecordGenerator):
             keywords=d['metadata']['keywords'],
             communities=[dd.get('identifier', dd.get('id')) for dd in d['metadata']['communities']],
             closed_access=d['metadata']['access_right'] == 'closed',
+            creators=[c['name'] for c in d['metadata']['creators']],
+            year=d['metadata']['publication_date'].split('-')[0],
+            license=d['metadata'].get('license', {}).get('id'),
         )
         if d.get('files'):
             kw['download_url'] = d['files'][0]['links']['self']
