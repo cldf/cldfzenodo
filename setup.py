@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='cldfzenodo',
-    version='0.1.0',
+    version='0.1.1.dev0',
     author='Robert Forkel',
     author_email='dlce.rdm@eva.mpg.de',
     description='functionality to retrieve CLDF datasets deposited on Zenodo',
