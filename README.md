@@ -35,7 +35,22 @@ objects. Such objects can be obtained in various ways:
     print(rec)
   ```
 
-`cldfzenodo.Record` objects provide sufficient metadata to allow identification and data access.
+`cldfzenodo.Record` objects provide sufficient metadata to allow identification and data access:
+```python
+>>> from cldfzenodo import Record
+>>> print(Record.from_doi('10.5281/zenodo.4762034').bibtex)
+@misc{zenodo-4762034,
+  author    = {Hammarström, Harald and Forkel, Robert and Haspelmath, Martin and Bank, Sebastian},
+  title     = {glottolog/glottolog: Glottolog database 4.4 as CLDF},
+  keywords  = {cldf:StructureDataset, linguistics},
+  publisher = {Zenodo},
+  year      = {2021},
+  doi       = {10.5281/zenodo.4762034},
+  url       = {https://doi.org/10.5281/zenodo.4762034},
+  copyright = {Creative Commons Attribution 4.0}
+}
+```
+
 One can download the full deposit (and access - possible multiple - CLDF datasets):
 ```python
 from pycldf import iter_datasets
