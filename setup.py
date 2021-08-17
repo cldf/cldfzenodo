@@ -16,9 +16,13 @@ setup(
     package_dir={'': 'src'},
     include_package_data=True,
     zip_safe=False,
-    entry_points={},
     platforms='any',
     python_requires='>=3.6',
+    entry_points={
+        'cldfbench.commands': [
+            'zenodo=cldfzenodo.commands',
+        ],
+    },
     install_requires=[
         'pycldf>=1.23.0',
         'html5lib',
@@ -26,8 +30,10 @@ setup(
         'attrs',
     ],
     extras_require={
+        'cli': ['cldfbench'],
         'dev': ['flake8', 'wheel', 'twine'],
         'test': [
+            'cldfbench',
             'pytest>=5',
             'pytest-mock',
             'pytest-cov',

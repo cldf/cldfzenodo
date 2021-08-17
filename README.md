@@ -12,8 +12,39 @@
 pip install cldfzenodo
 ```
 
+## CLI
 
-## Usage
+`cldfzenodo` provides a subcommand to be run from [cldfbench](https://github.com/cldf/cldfbench).
+To make use of this command, you have to install `cldfbench`, which can be done via
+```shell
+pip install cldfzenodo[cli]
+```
+Then you can download CLDF datasets from Zenodo, using the DOI for identification. E.g.
+```shell
+cldfbench zenodo.download 10.5281/zenodo.4683137  --directory wals-2020.1/
+```
+will download WALS Online as CLDF dataset into `wals-2020.1`:
+```shell
+$ tree wals-2020.1/
+wals-2020.1/
+├── areas.csv
+├── chapters.csv
+├── codes.csv
+├── contributors.csv
+├── countries.csv
+├── examples.csv
+├── language_names.csv
+├── languages.csv
+├── parameters.csv
+├── sources.bib
+├── StructureDataset-metadata.json
+└── values.csv
+
+0 directories, 12 files
+```
+
+
+## API
 
 Metadata and data of (potential) CLDF datasets deposited on Zenodo is accessed via `cldfzenodo.Record`
 objects. Such objects can be obtained in various ways:
