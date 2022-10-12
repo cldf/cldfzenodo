@@ -12,7 +12,7 @@ flake8 src
 ```
 
 - Update the version number, by removing the trailing `.dev0` in:
-  - `setup.py`
+  - `setup.cfg`
   - `src/cldfzenodo/__init__.py`
 
 - Create the release commit:
@@ -28,7 +28,7 @@ git tag -a v<VERSION> -m"<VERSION> release"
 - Release to PyPI:
 ```shell
 rm dist/*
-python setup.py sdist bdist_wheel
+python -m build -n
 twine upload dist/*
 ```
 
@@ -40,7 +40,7 @@ git push --tags
 
 - Change version for the next release cycle, i.e. incrementing and adding .dev0
 
-  - `setup.py`
+  - `setup.cfg`
   - `src/cldfzenodo/__init__.py`
 
 - Commit/push the version change:

@@ -9,7 +9,9 @@ from cldfzenodo import Record
 
 
 def register(parser):
-    parser.add_argument('doi')
+    parser.add_argument(
+        'doi',
+        help="DOI of the dataset, starting with 10.5281, Zenodo's DOI prefix.")
     parser.add_argument(
         '--directory',
         type=PathType(type='dir', must_exist=False),

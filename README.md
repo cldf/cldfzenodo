@@ -85,6 +85,7 @@ objects. Such objects can be obtained in various ways:
 One can download the full deposit (and access - possible multiple - CLDF datasets):
 ```python
 from pycldf import iter_datasets
+
 record.download('my_directory')
 for cldf in iter_datasets('my_directory'):
     pass
@@ -94,7 +95,5 @@ But often, only the "pure" CLDF data is of interest - and not the additional met
 context, e.g. of [cldfbench](https://github.com/cldf/cldfbench)-curated datasets. This can be done
 via
 ```python
-from pycldf import Dataset
-mdpath = record.download_dataset('my_directory')
-cldf = Dataset.from_metadata(mdpath)
+cldf = record.download_dataset('my_directory')
 ```
