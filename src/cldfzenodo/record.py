@@ -17,7 +17,7 @@ import attr
 import html5lib
 import nameparser
 from clldutils import licenses
-from pycldf import iter_datasets, Source
+from pycldf import iter_datasets, Source, Dataset
 
 __all__ = ['Record', 'GithubRepos']
 
@@ -99,7 +99,7 @@ class Record:
     creators = attr.ib(converter=get_creators, default=attr.Factory(list))
     year = attr.ib(default=None)
     license = attr.ib(default=None)
-    download_url = attr.ib(default=None)
+    download_urls = attr.ib(default=attr.Factory(list))
     keywords = attr.ib(default=attr.Factory(list))
     communities = attr.ib(default=attr.Factory(list), converter=lambda l: [i for i in l if i])
     github_repos = attr.ib(default=None)
@@ -108,6 +108,10 @@ class Record:
     def __attrs_post_init__(self):
         if not self.download_url:
             assert self.closed_access, self.doi
+
+    @property
+    def download_url(self):
+        return self.download_urls[0] if self.download_urls else None
 
     @property
     def id(self):
@@ -136,6 +140,9 @@ class Record:
             title=get('dct:title')[0].text,
             year=get('dct:issued')[0].text.split('-')[0],
             keywords=[ee.text for ee in get('dcat:keyword')],
+            # Note: We could store media-type info, but that's not always available and can
+            # typically be derived from the file suffix.
+            download_urls=get('dcat:downloadURL', 'rdf:resource'),
             communities=[
                 id_from_zenodo_url(t, 'communities') for t in get('dct:isPartOf', 'rdf:resource')],
         )
@@ -153,9 +160,6 @@ class Record:
                 assert name
                 creators.append(name[0].text)
         kw['creators'] = creators
-        for dl in get('dcat:downloadURL', 'rdf:resource'):
-            kw['download_url'] = dl
-            break
         for rs in get('dct:RightsStatement', 'rdf:about'):
             if rs == "info:eu-repo/semantics/closedAccess":
                 kw['closed_access'] = True
@@ -178,6 +182,18 @@ class Record:
                 if 'style' in e.attrib:
                     return cls.from_dcat_element(xml.etree.ElementTree.fromstring(e.text))
 
+    @staticmethod
+    def _download(url, dest, log=None):
+        urlpath = pathlib.Path(urllib.parse.urlparse(url).path)
+        with urllib.request.urlopen(url) as res:
+            if res.code == 200:
+                if log:
+                    log.info('Downloading {}'.format(url))
+                if urlpath.suffix == '.zip':
+                    zipfile.ZipFile(io.BytesIO(res.read())).extractall(path=dest)
+                else:
+                    dest.joinpath(urlpath.name).write_bytes(res.read())
+
     def download(self, dest, log=None) -> pathlib.Path:
         """
         Download the zipped file-content of the record to `dest`.
@@ -186,39 +202,31 @@ class Record:
         :param log:
         :return: The directory containing the unzipped files of the record.
         """
-        #
-        # FIXME: extend to non-zipped downloads
-        #
         dest = pathlib.Path(dest)
         is_empty = not dest.exists() or (len(list(dest.iterdir())) == 0)
+        if not dest.exists():
+            dest.mkdir()
+        if not self.download_urls:
+            raise ValueError('No downloadable resources')  # pragma: no cover
         # Preferentially download from github to not run into Zenodo's rate limit.
-        urls = [self.download_url] if self.download_url else []
         if self.github_repos and self.github_repos.release_url:
-            urls.append(self.github_repos.release_url)
-        for url in reversed(urls):
-            with urllib.request.urlopen(url) as res:
-                if res.code == 200:
-                    if log:
-                        log.info('Downloading {}'.format(url))
-                    zipfile.ZipFile(io.BytesIO(res.read())).extractall(path=dest)
-                    break
-        else:  # pragma: no cover
-            raise ValueError('No downloadable resources')
+            self._download(self.github_repos.release_url, dest, log=log)
+        else:
+            for url in self.download_urls:
+                self._download(url, dest, log=log)
         inner = list(dest.iterdir())
-        assert len(inner) == 1 and inner[0].is_dir()
-        if is_empty:
+        if is_empty and len(inner) == 1 and inner[0].is_dir():
             # Move the content of the inner-directory to dest:
             for p in inner[0].iterdir():
                 shutil.move(str(p), str(dest))
             inner[0].rmdir()
-            return dest
-        return inner[0]  # pragma: no cover
+        return dest
 
     def download_dataset(self, dest, condition=None, mdname=None, log=None):
         with tempfile.TemporaryDirectory() as tmpdirname:
             for ds in iter_datasets(self.download(tmpdirname, log=log)):
                 if (condition is None) or condition(ds):
-                    return ds.copy(dest, mdname=mdname)
+                    return Dataset.from_metadata(ds.copy(dest, mdname=mdname))
 
     @property
     def bibtex(self):

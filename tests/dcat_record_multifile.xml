@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:adms="http://www.w3.org/ns/adms#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:dctype="http://purl.org/dc/dcmitype/" xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:duv="http://www.w3.org/ns/duv#" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:frapo="http://purl.org/cerif/frapo/" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:gsp="http://www.opengis.net/ont/geosparql#" xmlns:locn="http://www.w3.org/ns/locn#" xmlns:org="http://www.w3.org/ns/org#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:prov="http://www.w3.org/ns/prov#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:schema="http://schema.org/" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:vcard="http://www.w3.org/2006/vcard/ns#" xmlns:wdrs="http://www.w3.org/2007/05/powder-s#">
+  <rdf:Description rdf:about="https://doi.org/10.5281/zenodo.7085903">
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
+    <dct:type rdf:resource="http://purl.org/dc/dcmitype/Dataset"/>
+    <dct:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://doi.org/10.5281/zenodo.7085903</dct:identifier>
+    <foaf:page rdf:resource="https://doi.org/10.5281/zenodo.7085903"/>
+    <dct:creator>
+      <rdf:Description>
+        <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
+        <foaf:name>Aguilar Panchi, Evelyn Michelle</foaf:name>
+        <foaf:givenName>Evelyn Michelle</foaf:givenName>
+        <foaf:familyName>Aguilar Panchi</foaf:familyName>
+        <org:memberOf>
+          <foaf:Organization>
+            <foaf:name>University of Tübingen</foaf:name>
+          </foaf:Organization>
+        </org:memberOf>
+      </rdf:Description>
+    </dct:creator>
+    <dct:creator>
+      <rdf:Description>
+        <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
+        <foaf:name>Lee, Saetbyul</foaf:name>
+        <foaf:givenName>Saetbyul</foaf:givenName>
+        <foaf:familyName>Lee</foaf:familyName>
+        <org:memberOf>
+          <foaf:Organization>
+            <foaf:name>University of Tübingen</foaf:name>
+          </foaf:Organization>
+        </org:memberOf>
+      </rdf:Description>
+    </dct:creator>
+    <dct:creator>
+      <rdf:Description>
+        <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
+        <foaf:name>Brodetsky, Evgenia</foaf:name>
+        <foaf:givenName>Evgenia</foaf:givenName>
+        <foaf:familyName>Brodetsky</foaf:familyName>
+        <org:memberOf>
+          <foaf:Organization>
+            <foaf:name>The Hebrew University of Jerusalem</foaf:name>
+          </foaf:Organization>
+        </org:memberOf>
+      </rdf:Description>
+    </dct:creator>
+    <dct:creator>
+      <rdf:Description>
+        <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Agent"/>
+        <foaf:name>Urban, Matthias</foaf:name>
+        <foaf:givenName>Matthias</foaf:givenName>
+        <foaf:familyName>Urban</foaf:familyName>
+        <org:memberOf>
+          <foaf:Organization>
+            <foaf:name>University of Tübingen</foaf:name>
+          </foaf:Organization>
+        </org:memberOf>
+      </rdf:Description>
+    </dct:creator>
+    <dct:title>CINWA: Database of Cultivated plants and their names in the indigenous languages of South America</dct:title>
+    <dct:publisher>
+      <foaf:Agent>
+        <foaf:name>Zenodo</foaf:name>
+      </foaf:Agent>
+    </dct:publisher>
+    <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">2022</dct:issued>
+    <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2022-09-16</dct:issued>
+    <owl:sameAs rdf:resource="https://zenodo.org/record/7085903"/>
+    <adms:identifier>
+      <adms:Identifier>
+        <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://zenodo.org/record/7085903</skos:notation>
+        <adms:schemeAgency>url</adms:schemeAgency>
+      </adms:Identifier>
+    </adms:identifier>
+    <dct:isVersionOf rdf:resource="https://doi.org/10.5281/zenodo.7085902"/>
+    <dct:isPartOf rdf:resource="https://zenodo.org/communities/cldf-datasets"/>
+    <owl:versionInfo>0.9</owl:versionInfo>
+    <dct:description>&lt;p&gt;This repository contains source data for CINWA -&amp;nbsp; Database of Cultivated plants and their names in the indigenous languages of South America&lt;/p&gt; &lt;p&gt;&lt;br&gt; If you use these data please cite the database&lt;/p&gt; &lt;p&gt;Aguilar Panchi, Evelyn Michelle, Saetbyul Lee, Evgenia Brodetsky, and Matthias Urban (eds.). 2022. CINWA - Database of Cultivated plants and their names in the indigenous languages of South America. Version 0.9. Available online at cinwa.org.&lt;/p&gt; &lt;p&gt;&lt;br&gt; If you would like to cite specific data entries, please also acknowledge the original source by consulting the reference that is associated with that entry. For example: Cook, Dorothy M., and Frances L. Gralow. 2001. Diccionario biling&amp;uuml;e koreguaje-espa&amp;ntilde;ol espa&amp;ntilde;ol-koreguaje. Santaf&amp;eacute; de Bogot&amp;aacute;: Editorial Alberto Lleras Camargo. In: Aguilar Panchi, Evelyn Michelle, Saetbyul Lee, Evgenia Brodetsky, and Matthias Urban (eds.). 2022. CINWA - Database of Cultivated plants and their names in the indigenous languages of South America. Version 0.9. Available online at cinwa.org.&lt;/p&gt;</dct:description>
+    <dct:accessRights rdf:resource="http://publications.europa.eu/resource/authority/access-right/PUBLIC"/>
+    <dct:accessRights>
+      <dct:RightsStatement rdf:about="info:eu-repo/semantics/openAccess">
+        <rdfs:label>Open Access</rdfs:label>
+      </dct:RightsStatement>
+    </dct:accessRights>
+    <dcat:distribution>
+      <dcat:Distribution>
+        <dct:license rdf:resource="https://creativecommons.org/licenses/by/4.0/legalcode"/>
+        <dcat:accessURL rdf:resource="https://doi.org/10.5281/zenodo.7085903"/>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:distribution>
+      <dcat:Distribution>
+        <dcat:accessURL rdf:resource="https://doi.org/10.5281/zenodo.7085903"/>
+        <dcat:byteSize>8892</dcat:byteSize>
+        <dcat:downloadURL rdf:resource="https://zenodo.org/record/7085903/files/cinwa-cldf-metadata.json"/>
+        <dcat:mediaType>application/json</dcat:mediaType>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:distribution>
+      <dcat:Distribution>
+        <dcat:accessURL rdf:resource="https://doi.org/10.5281/zenodo.7085903"/>
+        <dcat:byteSize>3216</dcat:byteSize>
+        <dcat:downloadURL rdf:resource="https://zenodo.org/record/7085903/files/lang_data.tsv"/>
+        <dcat:mediaType>text/tab-separated-values</dcat:mediaType>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:distribution>
+      <dcat:Distribution>
+        <dcat:accessURL rdf:resource="https://doi.org/10.5281/zenodo.7085903"/>
+        <dcat:byteSize>317589</dcat:byteSize>
+        <dcat:downloadURL rdf:resource="https://zenodo.org/record/7085903/files/main_data.tsv"/>
+        <dcat:mediaType>text/tab-separated-values</dcat:mediaType>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:distribution>
+      <dcat:Distribution>
+        <dcat:accessURL rdf:resource="https://doi.org/10.5281/zenodo.7085903"/>
+        <dcat:byteSize>23569</dcat:byteSize>
+        <dcat:downloadURL rdf:resource="https://zenodo.org/record/7085903/files/plant_data.tsv"/>
+        <dcat:mediaType>text/tab-separated-values</dcat:mediaType>
+      </dcat:Distribution>
+    </dcat:distribution>
+    <dcat:distribution>
+      <dcat:Distribution>
+        <dcat:accessURL rdf:resource="https://doi.org/10.5281/zenodo.7085903"/>
+        <dcat:byteSize>37350</dcat:byteSize>
+        <dcat:downloadURL rdf:resource="https://zenodo.org/record/7085903/files/sources_data.bib"/>
+      </dcat:Distribution>
+    </dcat:distribution>
+  </rdf:Description>
+</rdf:RDF>

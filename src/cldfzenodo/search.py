@@ -27,7 +27,7 @@ class Results(RecordGenerator):
             license=d['metadata'].get('license', {}).get('id'),
         )
         if d.get('files'):
-            kw['download_url'] = d['files'][0]['links']['self']
+            kw['download_urls'] = [d['files'][0]['links']['self']]
         for ri in d['metadata']['related_identifiers']:
             if ri['relation'] == 'isSupplementTo':
                 kw['github_repos'] = GithubRepos.from_url(ri['identifier'])

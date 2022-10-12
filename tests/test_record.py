@@ -2,7 +2,6 @@ import html
 import logging
 
 import pytest
-from pycldf import Dataset
 
 from cldfzenodo.record import *
 
@@ -32,6 +31,27 @@ def test_Record(record):
     rec = Record(doi='https://doi.org/10.5281/zenodo.4691101', title='', closed_access=True)
     assert rec.id == '4691101'
     assert 'Greenhill, Simon J. and Haynie, Hannah J.' in record.bibtex
+
+
+def test_Record_from_dcat_multifile(dcat_record_element_multifile, mocker, tmp_path):
+    class Response:
+        def __init__(self, *args):
+            self.yielded = False
+            self.code = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            pass
+
+        def read(self):
+            return b'abc'
+
+    rec = Record.from_dcat_element(dcat_record_element_multifile)
+    assert len(rec.download_urls) == 5
+    mocker.patch('cldfzenodo.record.urllib.request.urlopen', Response)
+    assert len(list(rec.download(tmp_path / 'test').iterdir())) == 5
 
 
 def test_Record_from_dcat(record):
@@ -68,8 +88,7 @@ def test_Record_download_dataset(tmp_path, mocker, tests_dir, caplog, record):
     mocker.patch('cldfzenodo.record.urllib.request.urlopen', Response)
 
     with caplog.at_level(logging.INFO):
-        assert Dataset.from_metadata(
-            record.download_dataset(tmp_path, log=logging.getLogger(__name__))).validate()
+        assert record.download_dataset(tmp_path, log=logging.getLogger(__name__)).validate()
         assert caplog.records
 
 
