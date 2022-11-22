@@ -1,5 +1,6 @@
 import html
 import logging
+import zipfile
 
 import pytest
 
@@ -68,6 +69,23 @@ def test_Record_from_doi(mocker, dcat_record):
     mocker.patch('cldfzenodo.record.urllib.request.urlopen', urlopen)
     rec = Record.from_doi('x')
     assert rec.id == '5173799'
+
+
+def test_DatasetResolver(mocker, tmp_path, tests_dir):
+    from pycldf.ext.discovery import get_dataset
+
+    class Record:
+        def from_doi(self, doi):
+            return self
+
+        def download(self, d):
+            with zipfile.ZipFile(tests_dir / 'petersonsouthasia-v1.1.zip', 'r') as zf:
+                zf.extractall(d)
+            return d
+
+    mocker.patch('cldfzenodo.record.Record', Record())
+    assert get_dataset('https://doi.org/10.5281/zenodo.1', tmp_path)
+    assert get_dataset('https://zenodo.org/record/1', tmp_path)
 
 
 def test_Record_download_dataset(tmp_path, mocker, tests_dir, caplog, record):

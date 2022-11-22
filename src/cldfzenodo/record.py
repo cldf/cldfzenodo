@@ -4,6 +4,7 @@ Zenodo deposit record, as described by the DataCite Metadata Schema 4.0.
 https://schema.datacite.org/meta/kernel-4.0/
 """
 import io
+import re
 import html
 import pathlib
 import shutil
@@ -18,9 +19,12 @@ import html5lib
 import nameparser
 from clldutils import licenses
 from pycldf import iter_datasets, Source, Dataset
+from pycldf.ext.discovery import DatasetResolver
 
 __all__ = ['Record', 'GithubRepos']
 
+ZENODO_DOI_PATTERN = re.compile(r"10\.5281/zenodo\.[0-9]+")
+ZENODO_DOI_FORMAT = '10.5281/zenodo.{}'
 NS = dict(
     rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     adms="http://www.w3.org/ns/adms#",
@@ -254,3 +258,17 @@ class Record:
                 line = line.split("'", maxsplit=1)[1]
                 line = ''.join(reversed(line)).split("'", maxsplit=1)[1]
                 return html.unescape(''.join(reversed(line)))
+
+
+class ZenodoResolver(DatasetResolver):
+    def __call__(self, loc, download_dir):
+        doi = None
+        m = ZENODO_DOI_PATTERN.search(loc)
+        if m:
+            doi = loc[m.start():m.end()]
+        else:
+            m = re.search(r'zenodo\.org/record/(?P<number>[0-9]+)', loc)
+            if m:
+                doi = ZENODO_DOI_FORMAT.format(m.group('number'))
+        if doi:
+            return Record.from_doi(doi).download(download_dir)
