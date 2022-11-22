@@ -12,6 +12,23 @@
 pip install cldfzenodo
 ```
 
+
+## `pycldf` dataset resolver
+
+`cldfzenodo` registers (upon installation) a [`pycldf` dataset resolver](https://pycldf.readthedocs.io/en/latest/ext_discovery.html)
+for dataset locators of the form `https://doi.org/10.5281/zenodo.[0-9]+` and `https://zenodo.org/record/[0-9]+`.
+Thus, after installation you should be able to retrieve `pycldf.Dataset` instances running
+
+```python
+>>> from pycldf.ext.discovery import get_dataset
+>>> import pathlib
+>>> pathlib.Path('wacl').mkdir()
+>>> ds = get_dataset('https://doi.org/10.5281/zenodo.7322688', pathlib.Path('wacl'))
+>>> ds.properties['dc:title']
+'World Atlas of Classifier Languages'
+```
+
+
 ## CLI
 
 `cldfzenodo` provides a subcommand to be run from [cldfbench](https://github.com/cldf/cldfbench).
