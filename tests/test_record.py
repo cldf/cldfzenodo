@@ -1,4 +1,5 @@
 import html
+import json
 import logging
 import zipfile
 
@@ -29,9 +30,12 @@ def test_Record(record):
     with pytest.raises(AssertionError):
         _ = Record(doi='10.5281/zenodo.4691101', title='')
 
+    assert record.version == 'v1.1'
+    assert record.concept_doi == '10.5281/zenodo.4691101'
+    assert 'Greenhill, Simon J. and Haynie, Hannah J.' in record.bibtex
+
     rec = Record(doi='https://doi.org/10.5281/zenodo.4691101', title='', closed_access=True)
     assert rec.id == '4691101'
-    assert 'Greenhill, Simon J. and Haynie, Hannah J.' in record.bibtex
 
 
 def test_Record_from_dcat_multifile(dcat_record_element_multifile, mocker, tmp_path):
@@ -68,6 +72,16 @@ def test_Record_from_doi(mocker, dcat_record):
 
     mocker.patch('cldfzenodo.record.urllib.request.urlopen', urlopen)
     rec = Record.from_doi('x')
+    assert rec.id == '5173799'
+
+
+def test_Record_from_concept_doi(mocker, tests_dir):
+    def urlopen(url):
+        content = json.loads(tests_dir.joinpath('search.json').read_text(encoding='utf8'))
+        return mocker.Mock(read=lambda: json.dumps(content).encode('utf8'))
+
+    mocker.patch('cldfzenodo.search.urllib.request.urlopen', urlopen)
+    rec = Record.from_concept_doi('10.5281/zenodo.4691101', '1.1')
     assert rec.id == '5173799'
 
 

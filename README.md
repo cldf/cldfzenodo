@@ -67,20 +67,35 @@ Metadata and data of (potential) CLDF datasets deposited on Zenodo is accessed v
 objects. Such objects can be obtained in various ways:
 - Via DOI:
   ```python
-  import cldfzenodo
-  rec = cldfzenodo.Record.from_doi('https://doi.org/10.5281/zenodo.4762034')
+  >>> import cldfzenodo
+  >>> rec = cldfzenodo.Record.from_doi('https://doi.org/10.5281/zenodo.4762034')
+  >>> rec.title
+  'glottolog/glottolog: Glottolog database 4.4 as CLDF'
+  ```
+- Via [concept DOI](https://help.zenodo.org/#versioning) and version tag:
+  ```python
+  >>> from cldfzenodo import Record
+  >>> rec = Record.from_concept_doi('10.5281/zenodo.3260727', '4.5')
+  >>> rec.title
+  'glottolog/glottolog: Glottolog database 4.5 as CLDF'
   ```
 - From deposits grouped into a Zenodo community (and obtained through OAI-PMH):
   ```python
-  import cldfzenodo.oai
-  for rec in cldfzenodo.oai.iter_records('dictionaria'):
-    print(rec)
+  >>> import cldfzenodo.oai
+  >>> for rec in cldfzenodo.oai.iter_records('dictionaria'):
+  ...     print(rec.title)
+  ...     break
+  ...     
+  dictionaria/iquito: Iquito dictionary
   ```
 - From search results using keywords:
   ```python
-  import cldfzenodo
-  for rec in cldfzenodo.search_wordlists():
-    print(rec)
+  >>> import cldfzenodo.search
+  >>> for rec in cldfzenodo.search.iter_records('cldf:Wordlist'):
+  ...     print(rec.title)
+  ...     break
+  ...     
+  CLDF dataset accompanying Zariquiey et al.'s "Evolution of Body-Part Terminology in Pano" from 2022
   ```
 
 `cldfzenodo.Record` objects provide sufficient metadata to allow identification and data access:
@@ -103,7 +118,7 @@ One can download the full deposit (and access - possible multiple - CLDF dataset
 ```python
 from pycldf import iter_datasets
 
-record.download('my_directory')
+Record.from_doi('...').download('my_directory')
 for cldf in iter_datasets('my_directory'):
     pass
 ```
@@ -112,5 +127,5 @@ But often, only the "pure" CLDF data is of interest - and not the additional met
 context, e.g. of [cldfbench](https://github.com/cldf/cldfbench)-curated datasets. This can be done
 via
 ```python
-cldf = record.download_dataset('my_directory')
+cldf = Record.from_doi('...').download_dataset('my_directory')
 ```

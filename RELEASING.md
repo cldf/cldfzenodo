@@ -14,6 +14,7 @@ flake8 src
 - Update the version number, by removing the trailing `.dev0` in:
   - `setup.cfg`
   - `src/cldfzenodo/__init__.py`
+  - `CHANGELOG.md`
 
 - Create the release commit:
 ```shell
