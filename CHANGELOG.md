@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Dropped py3.7 compatibility.
+
 
 ## [1.1.0] - 2022-12-21
 
