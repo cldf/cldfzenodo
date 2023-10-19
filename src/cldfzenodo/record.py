@@ -126,7 +126,7 @@ class Record:
     license = attr.ib(default=None)
     download_urls = attr.ib(default=attr.Factory(list))
     keywords = attr.ib(default=attr.Factory(list))
-    communities = attr.ib(default=attr.Factory(list), converter=lambda l: [i for i in l if i])
+    communities = attr.ib(default=attr.Factory(list), converter=lambda c: [i for i in c if i])
     github_repos = attr.ib(default=None)
     closed_access = attr.ib(default=False, validator=attr.validators.instance_of(bool))
     version = attr.ib(default=None)
