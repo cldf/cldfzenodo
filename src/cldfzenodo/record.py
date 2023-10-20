@@ -3,24 +3,20 @@ Zenodo deposit record, as described by the DCAT metadata.
 """
 import io
 import re
-import html
+import shutil
 import typing
 import pathlib
-import shutil
 import zipfile
 import tempfile
-import xml.etree
 import urllib.parse
 import urllib.request
 
 import attr
-import html5lib
 import nameparser
 from clldutils import licenses
 from pycldf import iter_datasets, Source, Dataset
-from pycldf.ext.discovery import DatasetResolver
 
-__all__ = ['Record', 'GithubRepos', 'ZENODO_DOI_FORMAT', 'ZENODO_DOI_PATTERN']
+__all__ = ['Record', 'GithubRepos', 'ZENODO_DOI_FORMAT', 'ZENODO_DOI_PATTERN', 'get_doi']
 
 ZENODO_DOI_PATTERN = re.compile(r"10\.5281/zenodo\.(?P<recid>[0-9]+)")
 ZENODO_DOI_FORMAT = '10.5281/zenodo.{}'
@@ -29,6 +25,7 @@ NS = dict(
     adms="http://www.w3.org/ns/adms#",
     dc="http://purl.org/dc/elements/1.1/",
     dct="http://purl.org/dc/terms/",
+    citedcat="https://w3id.org/citedcat-ap/",
     dctype="http://purl.org/dc/dcmitype/",
     dcat="http://www.w3.org/ns/dcat#",
     duv="http://www.w3.org/ns/duv#",
@@ -89,12 +86,37 @@ class GithubRepos:
             return 'https://github.com/{0.org}/{0.name}/archive/refs/tags/{0.tag}.zip'.format(self)
 
 
-def get_doi(doi_or_url):
-    url = urllib.parse.urlparse(doi_or_url)
+def get_doi(doi_or_url: str) -> str:
+    """
+
+    .. code-block:: python
+
+        >>> get_doi('10.5281/zenodo.5173799')
+        '10.5281/zenodo.5173799'
+        >>> get_doi("https://doi.org/10.5281/zenodo.5173799")
+        '10.5281/zenodo.5173799'
+        >>> get_doi("https://zenodo.org/doi/10.5281/zenodo.5173799")
+        '10.5281/zenodo.5173799'
+        >>> get_doi("https://zenodo.org/record/5173799")
+        '10.5281/zenodo.5173799'
+        >>> get_doi("https://zenodo.org/records/5173799")
+        '10.5281/zenodo.5173799'
+    """
+    url, doi = urllib.parse.urlparse(doi_or_url), None
     if not url.netloc:
-        return url.path
-    assert url.netloc == 'doi.org'
-    return url.path[1:]
+        doi = url.path
+    elif url.netloc == 'zenodo.org':
+        if url.path.startswith('/doi/'):
+            doi = url.path.replace('/doi/', '')
+        else:
+            doi = ZENODO_DOI_FORMAT.format(url.path.split('/')[-1])
+    elif url.netloc == 'doi.org':
+        doi = url.path[1:]
+    else:
+        raise ValueError('Unknown DOI format')
+    if not ZENODO_DOI_PATTERN.fullmatch(doi):
+        raise ValueError('Not a Zenodo DOI: "{}"'.format(doi))
+    return doi
 
 
 def get_creators(names):
@@ -148,99 +170,32 @@ class Record:
         return self.doi.replace('10.5281/zenodo.', '')
 
     @property
-    def version_tag(self) -> typing.Union[None, str]:
+    def version_tag(self) -> typing.Union[None, str]:  # pragma: no cover
         return self.version or (self.github_repos.tag if self.github_repos else None)
 
     @classmethod
-    def from_dcat_element(cls, e) -> 'Record':
-        def qn(name):
-            pref, _, lname = name.partition(':')
-            return "{%s}%s" % (NS[pref], lname)
-
-        def get(qname, attribute=None, parent=None):
-            return [
-                ee.attrib[qn(attribute)] if attribute else ee
-                for ee in (parent or e).findall('.//{}'.format(qn(qname)))
-                if not attribute or (ee.attrib.get(qn(attribute)))]
-
-        def id_from_zenodo_url(url, type_='record'):
-            url = urllib.parse.urlparse(url)
-            path_comps = url.path.split('/')
-            if url.netloc == 'zenodo.org' and path_comps[1] == type_:
-                return path_comps[2]
-
+    def from_dict(cls, d):
         kw = dict(
-            doi=get('rdf:Description', 'rdf:about')[0],
-            title=get('dct:title')[0].text,
-            year=get('dct:issued')[0].text.split('-')[0],
-            keywords=[ee.text for ee in get('dcat:keyword')],
-            # Note: We could store media-type info, but that's not always available and can
-            # typically be derived from the file suffix.
-            download_urls=get('dcat:downloadURL', 'rdf:resource'),
+            doi=d['doi'],
+            title=d['metadata']['title'],
+            keywords=d['metadata'].get('keywords'),
             communities=[
-                id_from_zenodo_url(t, 'communities') for t in get('dct:isPartOf', 'rdf:resource')],
+                dd.get('identifier', dd.get('id')) for dd in d['metadata'].get('communities', [])],
+            closed_access=d['metadata']['access_right'] in {'closed', 'restricted'},
+            creators=[c['name'] for c in d['metadata']['creators']],
+            year=d['metadata']['publication_date'].split('-')[0],
+            version=d['metadata'].get('version'),
+            concept_doi=d['conceptdoi'],
+            # FIXME: Check Zenodo API periodically to see whether URLs are correct now.
+            download_urls=[f['links']['self'].replace('/api/', '/') for f in d.get('files')],
         )
-        license = get('dct:license', 'rdf:resource')
-        if license:
-            kw['license'] = license[0]
-        version = get('owl:versionInfo')
-        if version:
-            kw['version'] = version[0].text
-        creators = []
-        for c in get('dct:creator'):
-            family = get('foaf:familyName', parent=c)
-            if family:
-                creators.append(
-                    '{}, {}'.format(family[0].text, get('foaf:givenName', parent=c)[0].text))
-            else:
-                name = get('foaf:name', parent=c)
-                assert name
-                creators.append(name[0].text)
-        kw['creators'] = creators
-        for rs in get('dct:RightsStatement', 'rdf:about'):
-            if rs == "info:eu-repo/semantics/closedAccess":
-                kw['closed_access'] = True
-                break
-        for ri in get('dct:relation', 'rdf:resource'):
-            gh = GithubRepos.from_url(ri)
-            if gh:
-                kw['github_repos'] = gh
-                break
-        for ri in get('dct:isVersionOf', 'rdf:resource'):
-            m = ZENODO_DOI_PATTERN.search(ri)
-            if m:
-                kw['concept_doi'] = ZENODO_DOI_FORMAT.format(m.group('recid'))
-
+        if 'license' in d['metadata']:
+            lic = d['metadata']['license']
+            kw['license'] = lic if isinstance(lic, str) else lic.get('identifier', lic.get('id'))
+        for ri in d['metadata'].get('related_identifiers', []):
+            if ri['relation'] == 'isSupplementTo':
+                kw['github_repos'] = GithubRepos.from_url(ri['identifier'])
         return cls(**kw)
-
-    @classmethod
-    def from_doi(cls, doi: str) -> 'Record':
-        res = urllib.request.urlopen('https://doi.org/{}'.format(get_doi(doi)))
-        url = urllib.parse.urlparse(res.url)
-        if url.netloc == 'zenodo.org':
-            doc = html5lib.parse(
-                urllib.request.urlopen(res.url + '/export/dcat').read().decode('utf8'))
-            for e in doc.findall('.//{http://www.w3.org/1999/xhtml}pre'):
-                if 'style' in e.attrib:
-                    return cls.from_dcat_element(xml.etree.ElementTree.fromstring(e.text))
-
-    @classmethod
-    def from_concept_doi(cls, doi: str, version_tag: str) -> 'Record':
-        """
-        :param doi: A Zenodo concept DOI
-        :param version_tag: A valid version tag for one of the deposits related to the concept DOI.
-
-        .. seealso:: `<https://help.zenodo.org/#versioning>`_
-        """
-        from cldfzenodo.search import Results
-
-        for rec in Results.from_params(
-            q='conceptrecid:"{}"'.format(ZENODO_DOI_PATTERN.search(doi).group('recid')),
-            sort='-version',
-            all_versions=True
-        ):
-            if rec.version_tag and rec.version_tag.replace('v', '') == version_tag.replace('v', ''):
-                return rec
 
     @staticmethod
     def _download(url, dest, log=None):
@@ -254,7 +209,7 @@ class Record:
                 else:
                     dest.joinpath(urlpath.name).write_bytes(res.read())
 
-    def download(self, dest, log=None) -> pathlib.Path:
+    def download(self, dest, log=None, unwrap=True, prefer_github=True) -> pathlib.Path:
         """
         Download the zipped file-content of the record to `dest`.
 
@@ -269,13 +224,13 @@ class Record:
         if not self.download_urls:
             raise ValueError('No downloadable resources')  # pragma: no cover
         # Preferentially download from github to not run into Zenodo's rate limit.
-        if self.github_repos and self.github_repos.release_url:
+        if prefer_github and self.github_repos and self.github_repos.release_url:
             self._download(self.github_repos.release_url, dest, log=log)
         else:
             for url in self.download_urls:
                 self._download(url, dest, log=log)
         inner = list(dest.iterdir())
-        if is_empty and len(inner) == 1 and inner[0].is_dir():
+        if unwrap and is_empty and len(inner) == 1 and inner[0].is_dir():
             # Move the content of the inner-directory to dest:
             for p in inner[0].iterdir():
                 shutil.move(str(p), str(dest))
@@ -306,25 +261,9 @@ class Record:
             src['copyright'] = lic.name if lic else self.license
         return src.bibtex()
 
-    @property
-    def citation(self) -> str:
-        for line in urllib.request.urlopen(
-                'https://zenodo.org/record/{}'.format(self.id)).read().decode('utf8').split('\n'):
-            if 'vm.citationResult' in line:
-                line = line.split("'", maxsplit=1)[1]
-                line = ''.join(reversed(line)).split("'", maxsplit=1)[1]
-                return html.unescape(''.join(reversed(line)))
-
-
-class ZenodoResolver(DatasetResolver):
-    def __call__(self, loc, download_dir):
-        doi = None
-        m = ZENODO_DOI_PATTERN.search(loc)
-        if m:
-            doi = loc[m.start():m.end()]
-        else:
-            m = re.search(r'zenodo\.org/record/(?P<number>[0-9]+)', loc)
-            if m:
-                doi = ZENODO_DOI_FORMAT.format(m.group('number'))
-        if doi:
-            return Record.from_doi(doi).download(download_dir)
+    def citation(self, api) -> str:
+        # curl -H "Accept:text/x-bibliography" "https://zenodo.org/api/records/7079637?style=apa
+        return api.records(
+            id_=self.id,
+            params=dict(style='apa'),
+            headers=dict(Accept='text/x-bibliography')).strip()

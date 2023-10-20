@@ -5,7 +5,7 @@ import pathlib
 
 from clldutils.clilib import PathType
 
-from cldfzenodo import Record
+from cldfzenodo import API
 
 
 def register(parser):
@@ -34,6 +34,10 @@ def register(parser):
 
 
 def run(args):
-    rec = Record.from_concept_doi(args.doi, args.version_tag) \
-        if args.version_tag else Record.from_doi(args.doi)
+    kw = dict(conceptdoi=args.doi, version=args.version_tag) \
+        if args.version_tag else dict(doi=args.doi)
+    rec = API.get_record(**kw)
+    if not rec:
+        raise ValueError('No record found')  # pragma: no cover
     rec.download(args.directory) if args.full_deposit else rec.download_dataset(args.directory)
+    return 0

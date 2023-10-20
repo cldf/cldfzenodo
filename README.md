@@ -5,6 +5,9 @@
 
 `cldfzenodo` provides programmatic access to CLDF data deposited on [Zenodo](https://zenodo.org).
 
+**NOTE:** The Zenodo upgrade from October 13, 2023 introduced quite a few changes in various parts
+of the system. Thus, `cldfzenodo` before version 2.0 cannot be used anymore.
+
 
 ## Install
 
@@ -67,22 +70,22 @@ Metadata and data of (potential) CLDF datasets deposited on Zenodo is accessed v
 objects. Such objects can be obtained in various ways:
 - Via DOI:
   ```python
-  >>> import cldfzenodo
-  >>> rec = cldfzenodo.Record.from_doi('https://doi.org/10.5281/zenodo.4762034')
+  >>> from cldfzenodo import API
+  >>> rec = API.get_record(doi='10.5281/zenodo.4762034')
   >>> rec.title
   'glottolog/glottolog: Glottolog database 4.4 as CLDF'
   ```
 - Via [concept DOI](https://help.zenodo.org/#versioning) and version tag:
   ```python
-  >>> from cldfzenodo import Record
-  >>> rec = Record.from_concept_doi('10.5281/zenodo.3260727', '4.5')
+  >>> from cldfzenodo import API
+  >>> rec = API.get_record(conceptdoi='10.5281/zenodo.3260727', version='4.5')
   >>> rec.title
   'glottolog/glottolog: Glottolog database 4.5 as CLDF'
   ```
-- From deposits grouped into a Zenodo community (and obtained through OAI-PMH):
+- From deposits grouped into a Zenodo community:
   ```python
-  >>> import cldfzenodo.oai
-  >>> for rec in cldfzenodo.oai.iter_records('dictionaria'):
+  >>> from cldfzenodo import API
+  >>> for rec in API.iter_records(community='dictionaria'):
   ...     print(rec.title)
   ...     break
   ...     
@@ -90,8 +93,8 @@ objects. Such objects can be obtained in various ways:
   ```
 - From search results using keywords:
   ```python
-  >>> import cldfzenodo.search
-  >>> for rec in cldfzenodo.search.iter_records('cldf:Wordlist'):
+  >>> from cldfzenodo import API
+  >>> for rec in API.iter_records(keyword='cldf:Wordlist'):
   ...     print(rec.title)
   ...     break
   ...     
@@ -100,8 +103,8 @@ objects. Such objects can be obtained in various ways:
 
 `cldfzenodo.Record` objects provide sufficient metadata to allow identification and data access:
 ```python
->>> from cldfzenodo import Record
->>> print(Record.from_doi('10.5281/zenodo.4762034').bibtex)
+>>> from cldfzenodo import API
+>>> print(API.get_record(doi='10.5281/zenodo.4762034').bibtex)
 @misc{zenodo-4762034,
   author    = {Hammarström, Harald and Forkel, Robert and Haspelmath, Martin and Bank, Sebastian},
   title     = {glottolog/glottolog: Glottolog database 4.4 as CLDF},
@@ -118,7 +121,7 @@ One can download the full deposit (and access - possible multiple - CLDF dataset
 ```python
 from pycldf import iter_datasets
 
-Record.from_doi('...').download('my_directory')
+API.get_record(doi='...').download('my_directory')
 for cldf in iter_datasets('my_directory'):
     pass
 ```
@@ -127,5 +130,5 @@ But often, only the "pure" CLDF data is of interest - and not the additional met
 context, e.g. of [cldfbench](https://github.com/cldf/cldfbench)-curated datasets. This can be done
 via
 ```python
-cldf = Record.from_doi('...').download_dataset('my_directory')
+cldf = API.get_record(doi='...').download_dataset('my_directory')
 ```

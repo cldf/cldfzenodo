@@ -1,0 +1,221 @@
+{
+  "hits": {
+    "hits": [
+      {
+        "created": "2022-09-16T12:53:46.033945+00:00",
+        "modified": "2022-09-18T02:26:39.492151+00:00",
+        "id": 7085903,
+        "conceptrecid": "7085902",
+        "doi": "10.5281/zenodo.7085903",
+        "conceptdoi": "10.5281/zenodo.7085902",
+        "doi_url": "https://doi.org/10.5281/zenodo.7085903",
+        "metadata": {
+          "title": "CINWA: Database of Cultivated plants and their names in the indigenous languages of South America",
+          "doi": "10.5281/zenodo.7085903",
+          "publication_date": "2022-09-16",
+          "description": "<p>This repository contains source data for CINWA -&nbsp; Database of Cultivated plants and their names in the indigenous languages of South America</p>\n\n<p><br>\nIf you use these data please cite the database</p>\n\n<p>Aguilar Panchi, Evelyn Michelle, Saetbyul Lee, Evgenia Brodetsky, and Matthias Urban (eds.). 2022. CINWA - Database of Cultivated plants and their names in the indigenous languages of South America. Version 0.9. Available online at cinwa.org.</p>\n\n<p><br>\nIf you would like to cite specific data entries, please also acknowledge the original source by consulting the reference that is associated with that entry. For example: Cook, Dorothy M., and Frances L. Gralow. 2001. Diccionario biling&uuml;e koreguaje-espa&ntilde;ol espa&ntilde;ol-koreguaje. Santaf&eacute; de Bogot&aacute;: Editorial Alberto Lleras Camargo. In: Aguilar Panchi, Evelyn Michelle, Saetbyul Lee, Evgenia Brodetsky, and Matthias Urban (eds.). 2022. CINWA - Database of Cultivated plants and their names in the indigenous languages of South America. Version 0.9. Available online at cinwa.org.</p>",
+          "access_right": "open",
+          "creators": [
+            {
+              "name": "Aguilar Panchi, Evelyn Michelle",
+              "affiliation": "University of Tübingen"
+            },
+            {
+              "name": "Lee, Saetbyul",
+              "affiliation": "University of Tübingen"
+            },
+            {
+              "name": "Brodetsky, Evgenia",
+              "affiliation": "The Hebrew University of Jerusalem"
+            },
+            {
+              "name": "Urban, Matthias",
+              "affiliation": "University of Tübingen"
+            }
+          ],
+          "version": "0.9",
+          "resource_type": {
+            "title": "Dataset",
+            "type": "dataset"
+          },
+          "license": {
+            "id": "cc-by-4.0"
+          },
+          "communities": [
+            {
+              "id": "cldf-datasets"
+            }
+          ],
+          "relations": {
+            "version": [
+              {
+                "index": 0,
+                "is_last": true,
+                "parent": {
+                  "pid_type": "recid",
+                  "pid_value": "7085902"
+                }
+              }
+            ]
+          }
+        },
+        "title": "CINWA: Database of Cultivated plants and their names in the indigenous languages of South America",
+        "links": {
+          "self": "https://zenodo.org/api/records/7085903",
+          "self_html": "https://zenodo.org/records/7085903",
+          "self_doi": "https://zenodo.org/doi/10.5281/zenodo.7085903",
+          "doi": "https://doi.org/10.5281/zenodo.7085903",
+          "parent": "https://zenodo.org/api/records/7085902",
+          "parent_html": "https://zenodo.org/records/7085902",
+          "parent_doi": "https://zenodo.org/doi/10.5281/zenodo.7085902",
+          "self_iiif_manifest": "https://zenodo.org/api/iiif/record:7085903/manifest",
+          "self_iiif_sequence": "https://zenodo.org/api/iiif/record:7085903/sequence/default",
+          "files": "https://zenodo.org/api/records/7085903/files",
+          "media_files": "https://zenodo.org/api/records/7085903/media-files",
+          "archive": "https://zenodo.org/api/records/7085903/files-archive",
+          "archive_media": "https://zenodo.org/api/records/7085903/media-files-archive",
+          "latest": "https://zenodo.org/api/records/7085903/versions/latest",
+          "latest_html": "https://zenodo.org/records/7085903/latest",
+          "draft": "https://zenodo.org/api/records/7085903/draft",
+          "versions": "https://zenodo.org/api/records/7085903/versions",
+          "access_links": "https://zenodo.org/api/records/7085903/access/links",
+          "access_users": "https://zenodo.org/api/records/7085903/access/users",
+          "access_request": "https://zenodo.org/api/records/7085903/access/request",
+          "access": "https://zenodo.org/api/records/7085903/access",
+          "reserve_doi": "https://zenodo.org/api/records/7085903/draft/pids/doi",
+          "communities": "https://zenodo.org/api/records/7085903/communities",
+          "communities-suggestions": "https://zenodo.org/api/records/7085903/communities-suggestions",
+          "requests": "https://zenodo.org/api/records/7085903/requests"
+        },
+        "updated": "2022-09-18T02:26:39.492151+00:00",
+        "recid": "7085903",
+        "revision": 3,
+        "files": [
+          {
+            "id": "d87647bb-59b7-4cca-8893-0f027d5b81fb",
+            "filename": "plant_data.tsv",
+            "filesize": 23569,
+            "checksum": "ee0e2bd34c66a49c6303b86aeaf8224c",
+            "links": {
+              "self": "https://zenodo.org/api/records/7085903/files/plant_data.tsv",
+              "download": "https://zenodo.org/api/records/7085903/files/plant_data.tsv/content"
+            }
+          },
+          {
+            "id": "4477d486-b30d-4e9c-9c9b-97b2f38d532a",
+            "filename": "cinwa-cldf-metadata.json",
+            "filesize": 8892,
+            "checksum": "8dc91996f32cdc415ff3e6042fa86ff7",
+            "links": {
+              "self": "https://zenodo.org/api/records/7085903/files/cinwa-cldf-metadata.json",
+              "download": "https://zenodo.org/api/records/7085903/files/cinwa-cldf-metadata.json/content"
+            }
+          },
+          {
+            "id": "117678fc-304a-47f5-9168-eec7b5bc470f",
+            "filename": "lang_data.tsv",
+            "filesize": 3216,
+            "checksum": "21f1ab8538c2ccc2b2a29d65a368e3ff",
+            "links": {
+              "self": "https://zenodo.org/api/records/7085903/files/lang_data.tsv",
+              "download": "https://zenodo.org/api/records/7085903/files/lang_data.tsv/content"
+            }
+          },
+          {
+            "id": "c1a4ab2e-287d-4585-966f-eb6f28960e2e",
+            "filename": "sources_data.bib",
+            "filesize": 37350,
+            "checksum": "f3dd0f8cbc55d31f999d4154c29ff13c",
+            "links": {
+              "self": "https://zenodo.org/api/records/7085903/files/sources_data.bib",
+              "download": "https://zenodo.org/api/records/7085903/files/sources_data.bib/content"
+            }
+          },
+          {
+            "id": "a7872888-1694-4e36-9438-f7c17e66df2f",
+            "filename": "main_data.tsv",
+            "filesize": 317589,
+            "checksum": "fa3974e57d8cf36f2fb76b29e1299aa7",
+            "links": {
+              "self": "https://zenodo.org/api/records/7085903/files/main_data.tsv",
+              "download": "https://zenodo.org/api/records/7085903/files/main_data.tsv/content"
+            }
+          }
+        ],
+        "owners": [
+          {
+            "id": 204527
+          }
+        ],
+        "status": "published",
+        "stats": {
+          "downloads": 35,
+          "unique_downloads": 8,
+          "views": 43,
+          "unique_views": 35,
+          "version_downloads": 35,
+          "version_unique_downloads": 8,
+          "version_unique_views": 35,
+          "version_views": 43
+        },
+        "state": "done",
+        "submitted": true
+      }
+    ],
+    "total": 1
+  },
+  "aggregations": {
+    "access_status": {
+      "buckets": [
+        {
+          "key": "open",
+          "doc_count": 1,
+          "label": "Open",
+          "is_selected": false
+        }
+      ],
+      "label": "Access status"
+    },
+    "resource_type": {
+      "buckets": [
+        {
+          "key": "dataset",
+          "doc_count": 1,
+          "label": "Dataset",
+          "is_selected": false,
+          "inner": {
+            "buckets": []
+          }
+        }
+      ],
+      "label": "Resource types"
+    },
+    "subject": {
+      "buckets": [],
+      "label": "Subjects"
+    },
+    "file_type": {
+      "buckets": [
+        {
+          "key": "bin",
+          "doc_count": 1,
+          "label": "BIN",
+          "is_selected": false
+        },
+        {
+          "key": "json",
+          "doc_count": 1,
+          "label": "JSON",
+          "is_selected": false
+        },
+        {
+          "key": "tsv",
+          "doc_count": 1,
+          "label": "TSV",
+          "is_selected": false
+        }
+      ],
+      "label": "File type"
+    }
+  }
+}

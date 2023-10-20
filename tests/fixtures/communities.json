@@ -1,0 +1,61 @@
+{
+  "hits": {
+    "hits": [
+      {
+        "id": "8b166a49-0700-467b-a5bd-e824e45beb88",
+        "created": "2018-06-22T08:33:20.515119+00:00",
+        "updated": "2018-06-22T08:50:44.244439+00:00",
+        "links": {
+          "self": "https://zenodo.org/api/communities/8b166a49-0700-467b-a5bd-e824e45beb88",
+          "self_html": "https://zenodo.org/communities/lexibank",
+          "settings_html": "https://zenodo.org/communities/lexibank/settings",
+          "logo": "https://zenodo.org/api/communities/8b166a49-0700-467b-a5bd-e824e45beb88/logo",
+          "rename": "https://zenodo.org/api/communities/8b166a49-0700-467b-a5bd-e824e45beb88/rename",
+          "members": "https://zenodo.org/api/communities/8b166a49-0700-467b-a5bd-e824e45beb88/members",
+          "public_members": "https://zenodo.org/api/communities/8b166a49-0700-467b-a5bd-e824e45beb88/members/public",
+          "invitations": "https://zenodo.org/api/communities/8b166a49-0700-467b-a5bd-e824e45beb88/invitations",
+          "requests": "https://zenodo.org/api/communities/8b166a49-0700-467b-a5bd-e824e45beb88/requests",
+          "records": "https://zenodo.org/api/communities/8b166a49-0700-467b-a5bd-e824e45beb88/records"
+        },
+        "revision_id": 0,
+        "slug": "lexibank",
+        "metadata": {
+          "title": "Lexibank",
+          "description": "Cross-linguistic lexical datasets in CLDF format.",
+          "curation_policy": "<p>See <a href=\"https://github.com/lexibank/lexibank\">https://github.com/lexibank/lexibank</a></p>\r\n",
+          "page": "<p>See <a href=\"https://github.com/lexibank/lexibank\">https://github.com/lexibank/lexibank</a></p>\r\n"
+        },
+        "access": {
+          "visibility": "public",
+          "member_policy": "open",
+          "record_policy": "open",
+          "review_policy": "open"
+        },
+        "custom_fields": null,
+        "deletion_status": {
+          "is_deleted": false,
+          "status": "P"
+        }
+      }
+    ],
+    "total": 1
+  },
+  "aggregations": {
+    "type": {
+      "buckets": [],
+      "label": "Type"
+    },
+    "funder": {
+      "buckets": [],
+      "label": "Funders"
+    },
+    "organization": {
+      "buckets": [],
+      "label": "Organizations"
+    }
+  },
+  "sortBy": "bestmatch",
+  "links": {
+    "self": "https://zenodo.org/api/communities?page=1&q=lexibank&size=25&sort=bestmatch"
+  }
+}
