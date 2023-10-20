@@ -1,6 +1,6 @@
 # Changes
 
-## [2.0.0]
+## [2.0.0] - 2023-10-20
 
 Zenodo's upgrade from Oct. 13, 2023 brought a couple of breaking changes for the Zenodo API.
 While it was possible to accomodate these changes in the implementation of `cldfzenodo`, while
