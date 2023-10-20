@@ -63,6 +63,10 @@ def test_Record(record):
     assert rec.id == '4691101'
 
 
+def test_Record_with_external_doi(record_factory):
+    assert record_factory('record_with_external_doi.json')
+
+
 def test_Record_multifile(record_factory, mocker, tmp_path):
     class Response:
         def __init__(self, *args):
@@ -114,4 +118,4 @@ def test_Record_citation(record, mocker):
             read=lambda: "& The Citation".encode('utf8'))
 
     mocker.patch('cldfzenodo.api.urllib.request.urlopen', urlopen)
-    assert record.citation(API) == '& The Citation'
+    assert record.get_citation(API) == '& The Citation'

@@ -1,6 +1,19 @@
 # Changes
 
-## [Unreleased]
+## [2.0.0]
+
+Zenodo's upgrade from Oct. 13, 2023 brought a couple of breaking changes for the Zenodo API.
+While it was possible to accomodate these changes in the implementation of `cldfzenodo`, while
+keeping the **cldfzenodo** API as is, we took the opportunity to also add a streamlined API. This
+only affects the `cldfzenodo` Python API, though - the commandline interface 
+`cldfbench zenodo.download`, as well as the `DatasetResolver` functionality has not
+changed. The old Python API is still available, though, but using it will trigger deprecation
+warnings.
+
+Deprecated functionality will be removed in v2.2.
+
+
+### Other changes
 
 - Dropped py3.7 compatibility.
 

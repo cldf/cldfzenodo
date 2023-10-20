@@ -1,7 +1,7 @@
 from cldfbench.__main__ import main
 
 
-def test_download(tmp_path, mocker):
+def test_download(tmp_path, mocker, recwarn):
     class Record:
         def download_dataset(self, dest):
             dest.joinpath('test').write_text('abc', encoding='utf8')

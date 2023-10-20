@@ -6,7 +6,9 @@
 `cldfzenodo` provides programmatic access to CLDF data deposited on [Zenodo](https://zenodo.org).
 
 **NOTE:** The Zenodo upgrade from October 13, 2023 introduced quite a few changes in various parts
-of the system. Thus, `cldfzenodo` before version 2.0 cannot be used anymore.
+of the system. Thus, `cldfzenodo` before version 2.0 cannot be used anymore. `cldfzenodo` is meant
+to be backwards compatible, i.e. provides the same Python API as `cldfzenodo` 1.x - but may issue
+deprecation warnings.
 
 
 ## Install

@@ -1,0 +1,1114 @@
+{
+  "hits": {
+    "hits": [
+      {
+        "created": "2015-02-18T00:15:06+00:00",
+        "modified": "2021-11-09T17:09:34.479930+00:00",
+        "id": 15482,
+        "conceptrecid": "608576",
+        "doi": "10.11646/zootaxa.3916.1.1",
+        "doi_url": "https://doi.org/10.11646/zootaxa.3916.1.1",
+        "metadata": {
+          "title": "A revision of the New World species of Cremnops Förster (Hymenoptera: Braconidae: Agathidinae)",
+          "doi": "10.11646/zootaxa.3916.1.1",
+          "publication_date": "2015-12-31",
+          "description": "Tucker, Erika M., Chapman, Eric G., Sharkey, Michael J. (2015): A revision of the New World species of Cremnops Förster (Hymenoptera: Braconidae: Agathidinae). Zootaxa 3916 (1): 1-83, DOI: http://dx.doi.org/10.11646/zootaxa.3916.1.1",
+          "access_right": "restricted",
+          "creators": [
+            {
+              "name": "Tucker, Erika M.",
+              "affiliation": null
+            },
+            {
+              "name": "Chapman, Eric G.",
+              "affiliation": null
+            },
+            {
+              "name": "Sharkey, Michael J.",
+              "affiliation": null
+            }
+          ],
+          "keywords": [
+            "Biodiversity",
+            "Taxonomy",
+            "Animalia",
+            "Arthropoda",
+            "Insecta",
+            "Hymenoptera",
+            "Braconidae"
+          ],
+          "related_identifiers": [
+            {
+              "identifier": "http://www.gbif.org/dataset/a769b646-ed6a-4028-827b-98312f729588",
+              "relation": "isSourceOf",
+              "resource_type": "dataset",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658820",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84437677FF2BFDE09E7F2006",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658822",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C8469765CFF2BFE399A6F2796",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658824",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C8468765FFF2BFC5A9EBA2625",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658829",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "urn:lsid:zoobank.org:act:BABE0628-EC5E-4B16-AA2E-832E8B2CAA1E",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "lsid"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C846B7651FF2BF9F29B1B24C5",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658831",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84657650FF2BFEE49C7D2006",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658833",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84647653FF2BFB2F9C12260E",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658835",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84677655FF2BF96F9DAA260E",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658837",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "urn:lsid:zoobank.org:act:FBAC4653-57B4-4288-BA61-F799AA25E013",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "lsid"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84617655FF2BFD279A6623A0",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658839",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84607657FF2BFB3F9C8125C6",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658841",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84637649FF2BF90D9D4325C6",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658843",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C847D7649FF2BFDEF9C2B22C5",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658845",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C847C764AFF2BFB7E9AE62796",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658847",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C847E764DFF2BFC5A9D132695",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658851",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C8479764FFF2BF9379EBA252E",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658853",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C847B764FFF2BFEC79E3B237C",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658855",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C847A7641FF2BFA9B9EBA2796",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658857",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84747643FF2BFF3F9EBA266D",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658859",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84777642FF2BFD1C9D132625",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658861",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84767644FF2BF9FD9EBA24E6",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658863",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84707647FF2BFE8F9A7C27F5",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658865",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "urn:lsid:zoobank.org:act:ED99BF48-0394-4F49-B8E7-A94349E0AA0C",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "lsid"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84737646FF2BFBB49C0925FD",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658867",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84727639FF2BFA479CA22705",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658869",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C840C763BFF2BFF3F9B1E24C5",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658871",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C840F763AFF2BFEEE9B802726",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658873",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C840E763DFF2BFCCF9D432556",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658875",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C8409763CFF2BFADB9D1326DD",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658877",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C840B763EFF2BFF3F9C1F266D",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658879",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C840A763EFF2BFD1C9C2B23E7",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658881",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84057633FF2BFB5A9C122695",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658883",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84077633FF2BFD549BC223E7",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658885",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "urn:lsid:zoobank.org:act:4708C73E-FECF-A94F-4E98-3CB5D77532B3",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "lsid"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84067635FF2BFB7D9E1025FD",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658887",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84017634FF2BF9DD9DAA27F5",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658889",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84037636FF2BFF3F9C8C2695",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.5658891",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://treatment.plazi.org/id/DE19B25C84027636FF2BFD599C2B23F8",
+              "relation": "hasPart",
+              "resource_type": "publication-taxonomictreatment",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.399010",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399011",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "http://table.plazi.org/id/02CF53C2844B767FFF2BFDA89DEE2625",
+              "relation": "hasPart",
+              "resource_type": "dataset",
+              "scheme": "url"
+            },
+            {
+              "identifier": "10.5281/zenodo.399012",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399013",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399014",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399015",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.398919",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399016",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399017",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399018",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399019",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399020",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.398926",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399021",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399022",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399023",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399024",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399025",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399026",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399027",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399028",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399029",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399030",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399031",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399032",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399033",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399034",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399035",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.398942",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399036",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399037",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399038",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.398946",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399039",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399040",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399041",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399042",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.398951",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399043",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.5281/zenodo.399044",
+              "relation": "hasPart",
+              "resource_type": "image-figure",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1109/tac.1974.1100705",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.2475/ajs.s4-47.281.376",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1093/molbev/msi152",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1111/j.1096-0031.2008.00217.x",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1111/j.1471-8286.2006.01470.x",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1146/annurev.ento.32.1.95",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1098/rspb.2002.2218",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1073/pnas.0406166101",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1007/978-1-59745-251-9_3",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1007/BF01731581",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1006/mpev.1999.0618",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1093/nar/gkq443",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1093/molbev/msn083",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1016/S0022-5193(05)80104-3",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1093/bioinformatics/btg180",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.3897/jhr.22.1299",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1111/j.1096-0031.2006.00121.x",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.3897/jhr.23.1100",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1017/S000748530003025X",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1109/IPDPS.2006.1639535",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1603/0013-8746",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1111/j.1096-0031.2010.00329.x",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            },
+            {
+              "identifier": "10.1371/journal.pone.0015991",
+              "relation": "cites",
+              "resource_type": "publication",
+              "scheme": "doi"
+            }
+          ],
+          "references": [
+            "Akaike, H. (1974) A new look at the statistical model identification. IEEE Transactions on Automatic Control, 19 (6), 716-723. http://dx.doi.org/10.1109/tac.1974.1100705",
+            "Bartlett, B.R., Clausen, C.P., DeBach, P., Goeden, R.D., Legner, E.F., McMurtry, J.A. & Oatman, E.R. (1978) Introduced parasites and predators of arthropod pests and weeds: A world review. Agricultural Research Service, United States Department of Agriculture Handbook No. 480, 545 pp.",
+            "Berta, C.D. (1987) Dos nuevas species de Cremnops Foerster (Hymenoptera, Braconidae, Agathidinae) de Argentina Y Bolivia [Two new species of Cremnops, new record Foerster (Hymenoptera: Braconidae: Agathidinae) of Argentina and Bolivia]. Acta Zoologica Lilloana, 39 (1), 13-16.",
+            "Berta, D.C. (1998) Contribucion al conocimiento del genero Cremnops Foerster, 1862 (Braconidae, Agathidinae) en la region Neotropical [The genus Cremnops Foerster, 1862 (Braconidae, Agathidinae) in the Neotropical region.]. Acta Zoologica Lilloana, 44 (1), 231-288.",
+            "Bhat, S. (1979) Oriental species of Cremnops Foerster (Hymenoptera: Braconidae). Entomon, 4 (1), 27-39.",
+            "Brown, R.W. (1956) Composition of scientific words: a manual of methods and a lexicon of materials for the practice of logotechnics. Smithsonian Institution Press, 882 pp.",
+            "Chen, J. & Yang, J. (2006) Hymenoptera Braconidae (IV) Agathidinae. Fauna Sinica. Insecta, 46 (i-vii), 1-301.",
+            "Chu, J.T. & Hsia, S.H. (1937) A list of the known Hymenopterous parasites of the European corn borer (Pyrausta nubilalis Huebner). Entomology and Pathology, 5 (8i), 136-147.",
+            "Cockerell, T.D.A. (1919) Some fossil parasitic Hymenoptera. American Journal of Science, 47, 376-380. http://dx.doi.org/10.2475/ajs.s4-47.281.376",
+            "Dallwitz, M.J., Paine, T.A. & Zurcher, E.J. (1993 onwards) User's guide to the DELTA System: a general system for processing taxonomic descriptions. 4th edition. Available from: http://delta-intkey.com (accessed January 2014)",
+            "Dallwitz, M.J., Paine, T.A. & Zurcher, E.J. (2000 onwards) User's guide to Intkey: a program for interactive identification and information retrieval. Available from: http://delta-intkey.com (accessed January 2014)",
+            "Dallwitz, M.J., Paine, T.A. & Zurcher, E.J. (1999 onwards) User's guide to the DELTA Editor. Available from: http://deltaintkey.com (accessed January 2014)",
+            "Dallwitz, M.J., Paine, T.A. & Zurcher, E.J. (2000 onwards) Principles of interactive keys. Available from: http://deltaintkey.com (accessed January 2014)",
+            "Drummond, A.J., Ashton, B., Cheung, M., Heled, J., Kearse, M., Moir, R., Stones-Havas, S., Thierer, T. & Wilson, A. (2009) Geneious v4.7. Available from: http://www.geneious.com/ (accessed January 2014)",
+            "Evenhuis, N.L. (2007) The insect and spider collections of the world website. Available from: http://hbs.bishopmuseum.org/ codens/codens-r-us.html (accessed 1 January 2014)",
+            "Folmer, O., Black, M., Hoeh, W., Lutz, R. & Vrijenhoek, R. (1994) DNA primers for amplification of mitochondrial cytochrome c oxidase subunit I from diverse metazoan invertebrates. Molecular Marine Biology and Biotechnology, 3, 294-297.",
+            "Foerster, A. (1862) Synopsis der Familien und Gattungen der Braconiden. Verhandlunggen des Naturhistorischen Vereins der Preussischnen Rheinlande und Westfalens, 199, 225-288.",
+            "Garthwaite, P.F. & Desai, M.H. (1939) On the biology of the parasites of the teak defoliators, Hapalia machaeralis Walk. (Pyralidae) and Hyblaea puera Cram. (Hyblaeidae) in Burma. Indian Forest Records, 5, 307-353.",
+            "Gillespie, J.J., Munro, J.B., Heraty, J.M., Yoder, M.J., Owen, A.K. & Carmichael, A.E. (2005) Secondary structural model of the 28S rRNA expansion segments D2 and D3 for chalcidoid wasps (Hymenoptera: Chalcidoidea). Molecular Biology and Evolution, 22, 1593-1608.",
+            "http://dx.doi.org/10.1093/molbev/msi152",
+            "Goloboff, P.A., Farris, J.S. & Nixon, K.C. (2008) TNT, a free program for phylogenetic analysis. Cladistics, 24, 774-786. http://dx.doi.org/10.1111/j.1096-0031.2008.00217.x",
+            "Hajibabaei, M., Smith, M.A., Janzen, D.H., Rodriguez, J.J., Whitfield, J.B. & Hebert, P.D.N. (2006) A minimalist barcode can identify a specimen whose DNA is degraded. Molecular Ecology Notes, 6, 959-964.",
+            "http://dx.doi.org/10.1111/j.1471-8286.2006.01470.x",
+            "Halffter, G. (1987) Biogeography of the montane entomofauna of Mexico and Central America. Annual Review of Entomology, 32, 95-114.",
+            "http://dx.doi.org/10.1146/annurev.ento.32.1.95",
+            "Hall, T.A. (1999) BioEdit: a user-friendly biological sequence alignment editor and analysis program for Windows 95/98/NT. Nucleic Acids Symposium Series, 41, 95-98.",
+            "Hancock, J.M., Taut, D. & Dover, G.A. (1988) Evolution of the secondary structure and compensatory mutations of the ribosomal RNAs of Drosophila melanogaster. Molecular Biology and Evolution, 5, 393-414.",
+            "Hebert, P.D.N., Cywinska, A., Ball, S.L. & deWaard, R. (2003) Biological identifications through DNA barcodes. The Royal Society, 270, 313-321.",
+            "http://dx.doi.org/10.1098/rspb.2002.2218",
+            "Hebert, P.D.N., Penten, E.H., Burns, J.M., Janzen, D.H. & Hallwachs, W. (2004) Ten species in one: DNA barcoding reveals cryptic species in the neotropical skipper butterfly Astaples fulgerator. Proceedings of the National Academy of Sciences of the United States of America, 101 (41), 14812-14817.",
+            "http://dx.doi.org/10.1073/pnas.0406166101",
+            "Katoh, K., Asimenos, G. & Toh, H. (2009) Multiple Alignment of DNA Sequences with MAFFT. In: Posada, D. (Ed.), Bioinformatics for DNA Sequence Analysis. Vol. 537. Methods in Molecular Biology, pp. 39-64. http://dx.doi.org/10.1007/978-1-59745-251-9_3",
+            "Kimura, M. (1980) A simple method for estimating evolutionary rates of base substitutions through comparative studies of nucleotide sequences. Journal of Molecular Evolution, 16, 111-120.",
+            "http://dx.doi.org/10.1007/BF01731581",
+            "Mardulyn, P. & Whitfield, J.B. (1999) Phylogenetic Signal in the COI, 16S, and 28S Genes for inferring relationships among genera of Microgastrinae (Hymenoptera; Braconidae): Evidence of a high diversification rate in this group of Parasitoids. Molecular Phylogenetics and Evolution, 12 (3), 282-294.",
+            "http://dx.doi.org/10.1006/mpev.1999.0618",
+            "Marsh, P.M. (1961) A taxonomic study of the genus Cremnops Foerster in America north of Mexico (Hymenoptera: Braconidae). Annals of the Entomological Society of America, 54, 851-861.",
+            "Nixon, G.E.J. (1956) Two new braconid parasites of Loxostege frustalis Zell. in South Africa. Journal of the Entomological Society of South Africa, 19, 128-131.",
+            "Penn, O., Privman, E., Ashkenazy, H., Landan, G., Graur, D. & Pupko, T. (2010) GUIDANCE: a web server for assessing alignment confidence scores. Nucleic Acids Research, 38 (Web Server issue), W23-W28. http://dx.doi.org/10.1093/nar/gkq443",
+            "Posada, D. (2008) jModelTest: phylogenetic model averaging. Molecular Biology and Evolution, 25 (7), 1253-1256. http://dx.doi.org/10.1093/molbev/msn083",
+            "Rambaut, A. (2006) Fig Tree: tree figure drawing tool version 1.3.1. Institute of Evolutionary Biology, University of Edinburgh. Available from: http://tree.bio.ed.ac.uk/ (accessed 1 January 2014)",
+            "Rodriguez, F., Oliver, J.L., Marin, A. & Medina, J.R. (1990) The general stochastic model of nucleotide substitution. Journal of Theoretical Biology, 142, 485-501.",
+            "http://dx.doi.org/10.1016/S0022-5193(05)80104-3",
+            "Ronquist, F. & Huelsenbeck, J.P. (2003) MRBAYES 3: Bayesian phylogenetic inference under mixed models. Bioinformatics, 19, 1572-1574.",
+            "http://dx.doi.org/10.1093/bioinformatics/btg180",
+            "Sharkey, M.J. & Clutts, S.A. (2011) A revision of Thai Agathidinae (Hymenoptera: Braconidae), with descriptions of six new species. Journal of Hymenoptera Research, 22, 69-132.",
+            "http://dx.doi.org/10.3897/jhr.22.1299",
+            "Sharkey, M.J. & Wharton, R.A. (1997) Morphology and terminology. In: Wharton, R.A., Marsh, P.M. & Sharkey, M.J. (Eds.), Manual of the New World genera of Braconidae (Hymenoptera). No. 1. Special Publication of the International Society of Hymenopterists, pp. 19-38.",
+            "Sharkey, M.J. (1997) Subfamily Agathidinae. In: Wharton, R.A., Marsh, P.M. & Sharkey, M.J. (Eds.), Manual of the New World genera of Braconidae (Hymenoptera). No. 1. Special Publication of the International Society of Hymenopterists, pp. 69-74.",
+            "Sharkey, M.J. (1996) The Agathidinae (Hymenoptera: Braconidae) of Japan. Bulletin of the National Institute of Agro- Environmental Sciences, 13, 1-100.",
+            "Sharkey, M.J. (1998) Agathidinae [in Russian with English translation]. In: Ler, P.A. (Ed.), Key to the insects of Russian Far East. Vol . 4 . Neuropteroidea, Mecoptera, Hymenoptera. Pt 3. pp. 520-531.",
+            "Sharkey, M.J. (2004) Synopsis of the Agathidinae (Hymenoptera: Braconidae) of America north of Mexico. Trudy Russkago Entomologicheskago Obshchestva [Proceeding of the Russian Entomological Society. St. Petersburg], 75 (1), 134-152.",
+            "Sharkey, M.J., Laurenne, N.M., Sharanowski, B. Quicke, D.L.J. & Murray, D. (2006) Revision of the Agathidinae (Hymenoptera: Braconidae) with comparisons of static and dynamic alignments. Cladistics, 22, 546-567. http://dx.doi.org/10.1111/j.1096-0031.2006.00121.x",
+            "Sharkey, M.J., Parys, K.A. & Clutts, S.A. (2011) A new genus of Agathidinae with the description of a new species parasitic on Samea multiplicalis (Guenee). Journal of Hymenoptera Research, 23, 43-53.",
+            "http://dx.doi.org/10.3897/jhr.23.1100",
+            "Simmonds, F.J. (1947) The biology of the parasites of Loxostege sticticalis L. in North America Bracon vulgaris (Cress.) (Braconidae, Agathidinae). Bulletin of Entomological Research, 39, 145-155.",
+            "http://dx.doi.org/10.1017/S000748530003025X",
+            "Smith, R.C. & Franklin, W.W. (1954) The garden webworm Loxostege similalis Guen. as an alfalfa pest in Kansas. Journal of the Kansas Entomological Society, 27 (1), 27-38.",
+            "Stamatakis, A. (2006) Phylogenetic models of rate heterogeneity: A high performance computing perspective. Proceedings of the of 20th International Parallel and Distributed Processing Symposium 2006, Rhodes, Greece. http://dx.doi.org/10.1109/IPDPS.2006.1639535",
+            "Swofford, D.L. (2003) PAUP* Phylogenetic Analysis Using Parsimony (*and Other Methods). Version 4. Sinauer Associates, Sunderland, Massachusetts.",
+            "Tooker, J.F. & Hanks, L.M. (2000) Flowering plant hosts of adult hymenopteran parasitoids of central Illinois. Annals of the Entomological Society of America, 93 (3), 580-588.",
+            "http://dx.doi.org/10.1603/0013-8746 (2000)093[0580:FPHOAH]2.0.CO;2",
+            "Vaidya, G., Lohman, D.J. & Meier, R. (2011) SequenceMatrix: concatenation software for the fast assembly of multi-gene datasets with character set and codon information. Cladistics, 27, 171-180.",
+            "http://dx.doi.org/10.1111/j.1096-0031.2010.00329.x",
+            "Welter-Schultes, F.W. (2012) Guidelines for the capture and management of digital zoological names information. Version 1.0. Global Biodiversity Information Facility, Copenhagen, 126 pp.",
+            "Yoder, M.J., Miko, I., Seltmann, K.C., Bertone, M.A. & Deans, A.R. (2010) A Gross Anatomy Ontology for Hymenoptera. PLoS ONE, 5 (12), e15991.",
+            "http://dx.doi.org/10.1371/journal.pone.0015991",
+            "Yu. D.S., Van Achterberg, C. & Horstmann, K. (2009) World Ichneumonoidea 2009. Taxonomy, biology, morphology and distribution [Ichneumonidae]. Taxapad 2009 (Scientific names for information management) Interactive catalogue, Vancouver, Canada. [Flash drive]",
+            "Zwickl, D.J. (2006) Genetic algorithm approaches for the phylogenetic analysis of large biological sequence datasets under the maximum likelihood criterion. Ph.D. dissertation, The University of Texas at Austin, 125 pp."
+          ],
+          "resource_type": {
+            "title": "Journal article",
+            "type": "publication",
+            "subtype": "article"
+          },
+          "journal": {
+            "issue": "1",
+            "pages": "1-83",
+            "title": "Zootaxa",
+            "volume": "3916"
+          },
+          "alternate_identifiers": [
+            {
+              "identifier": "urn:lsid:zoobank.org:pub:15384700-9D9B-4F77-AA0B-FA6DA317BCCB"
+            },
+            {
+              "identifier": "urn:lsid:plazi.org:pub:2220CA24844D7679FFBCFFA89F7F2432"
+            },
+            {
+              "identifier": "http://publication.plazi.org/id/2220CA24844D7679FFBCFFA89F7F2432"
+            }
+          ],
+          "communities": [
+            {
+              "id": "biosyslit"
+            }
+          ],
+          "relations": {
+            "version": [
+              {
+                "index": 0,
+                "is_last": true,
+                "parent": {
+                  "pid_type": "recid",
+                  "pid_value": "608576"
+                }
+              }
+            ]
+          }
+        },
+        "title": "A revision of the New World species of Cremnops Förster (Hymenoptera: Braconidae: Agathidinae)",
+        "links": {
+          "self": "https://zenodo.org/api/records/15482",
+          "self_html": "https://zenodo.org/records/15482",
+          "self_doi": "https://zenodo.org/doi/10.11646/zootaxa.3916.1.1",
+          "doi": "https://doi.org/10.11646/zootaxa.3916.1.1",
+          "parent": "https://zenodo.org/api/records/608576",
+          "parent_html": "https://zenodo.org/records/608576",
+          "parent_doi": "https://zenodo.org/doi/",
+          "self_iiif_manifest": "https://zenodo.org/api/iiif/record:15482/manifest",
+          "self_iiif_sequence": "https://zenodo.org/api/iiif/record:15482/sequence/default",
+          "files": "https://zenodo.org/api/records/15482/files",
+          "media_files": "https://zenodo.org/api/records/15482/media-files",
+          "archive": "https://zenodo.org/api/records/15482/files-archive",
+          "archive_media": "https://zenodo.org/api/records/15482/media-files-archive",
+          "latest": "https://zenodo.org/api/records/15482/versions/latest",
+          "latest_html": "https://zenodo.org/records/15482/latest",
+          "draft": "https://zenodo.org/api/records/15482/draft",
+          "versions": "https://zenodo.org/api/records/15482/versions",
+          "access_links": "https://zenodo.org/api/records/15482/access/links",
+          "access_users": "https://zenodo.org/api/records/15482/access/users",
+          "access_request": "https://zenodo.org/api/records/15482/access/request",
+          "access": "https://zenodo.org/api/records/15482/access",
+          "reserve_doi": "https://zenodo.org/api/records/15482/draft/pids/doi",
+          "communities": "https://zenodo.org/api/records/15482/communities",
+          "communities-suggestions": "https://zenodo.org/api/records/15482/communities-suggestions",
+          "requests": "https://zenodo.org/api/records/15482/requests"
+        },
+        "updated": "2021-11-09T17:09:34.479930+00:00",
+        "recid": "15482",
+        "revision": 15,
+        "files": [],
+        "owners": [
+          {
+            "id": 1161
+          }
+        ],
+        "status": "published",
+        "stats": {
+          "downloads": 0,
+          "unique_downloads": 0,
+          "views": 48,
+          "unique_views": 46,
+          "version_downloads": 0,
+          "version_unique_downloads": 0,
+          "version_unique_views": 46,
+          "version_views": 48
+        },
+        "state": "done",
+        "submitted": true
+      }
+    ],
+    "total": 1
+  },
+  "aggregations": {
+    "access_status": {
+      "buckets": [
+        {
+          "key": "restricted",
+          "doc_count": 1,
+          "label": "Restricted",
+          "is_selected": false
+        }
+      ],
+      "label": "Access status"
+    },
+    "resource_type": {
+      "buckets": [
+        {
+          "key": "publication",
+          "doc_count": 1,
+          "label": "Publication",
+          "is_selected": false,
+          "inner": {
+            "buckets": [
+              {
+                "key": "publication-article",
+                "doc_count": 1,
+                "label": "Journal article",
+                "is_selected": false
+              }
+            ]
+          }
+        }
+      ],
+      "label": "Resource types"
+    },
+    "subject": {
+      "buckets": [
+        {
+          "key": "Animalia",
+          "doc_count": 1,
+          "label": "Animalia",
+          "is_selected": false
+        },
+        {
+          "key": "Arthropoda",
+          "doc_count": 1,
+          "label": "Arthropoda",
+          "is_selected": false
+        },
+        {
+          "key": "Biodiversity",
+          "doc_count": 1,
+          "label": "Biodiversity",
+          "is_selected": false
+        },
+        {
+          "key": "Braconidae",
+          "doc_count": 1,
+          "label": "Braconidae",
+          "is_selected": false
+        },
+        {
+          "key": "Hymenoptera",
+          "doc_count": 1,
+          "label": "Hymenoptera",
+          "is_selected": false
+        },
+        {
+          "key": "Insecta",
+          "doc_count": 1,
+          "label": "Insecta",
+          "is_selected": false
+        },
+        {
+          "key": "Taxonomy",
+          "doc_count": 1,
+          "label": "Taxonomy",
+          "is_selected": false
+        }
+      ],
+      "label": "Subjects"
+    },
+    "file_type": {
+      "buckets": [],
+      "label": "File type"
+    }
+  }
+}

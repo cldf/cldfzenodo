@@ -24,7 +24,10 @@ def q(**kw) -> str:
 
     See https://help.zenodo.org/guides/search/ for details.
     """
-    return ' '.join('{}:"{}"'.format(k, v) for k, v in kw.items())
+    res = kw.pop('_q', '') or ''
+    if kw:
+        res += '' + ' '.join('{}:"{}"'.format(k, v) for k, v in kw.items())
+    return res.strip()
 
 
 class Results:

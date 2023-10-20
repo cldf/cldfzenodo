@@ -58,7 +58,7 @@ def test_keyword(API):  # pragma: no cover
 def test_record(API):  # pragma: no cover
     with API:
         rec = API.get_record(doi="10.5281/zenodo.5173799")
-        cit = rec.citation(API)
+        cit = rec.get_citation(API)
     assert rec.id == '5173799'
     assert 'Greenhill' in cit
     assert API.scoped_requests == 2

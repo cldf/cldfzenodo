@@ -13,12 +13,12 @@ import urllib.request
 
 import attr
 import nameparser
-from clldutils import licenses
 from pycldf import iter_datasets, Source, Dataset
 
 __all__ = ['Record', 'GithubRepos', 'ZENODO_DOI_FORMAT', 'ZENODO_DOI_PATTERN', 'get_doi']
 
 ZENODO_DOI_PATTERN = re.compile(r"10\.5281/zenodo\.(?P<recid>[0-9]+)")
+DOI_PATTERN = re.compile(r"10\.[0-9.]+/[^/]+")
 ZENODO_DOI_FORMAT = '10.5281/zenodo.{}'
 NS = dict(
     rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#",
@@ -114,8 +114,8 @@ def get_doi(doi_or_url: str) -> str:
         doi = url.path[1:]
     else:
         raise ValueError('Unknown DOI format')
-    if not ZENODO_DOI_PATTERN.fullmatch(doi):
-        raise ValueError('Not a Zenodo DOI: "{}"'.format(doi))
+    if not (ZENODO_DOI_PATTERN.fullmatch(doi) or DOI_PATTERN.fullmatch(doi)):
+        raise ValueError('Not a DOI: "{}"'.format(doi))
     return doi
 
 
@@ -141,7 +141,7 @@ class Record:
     """
     doi = attr.ib(
         converter=get_doi,
-        validator=attr.validators.matches_re(r'10\.5281/zenodo\.[0-9]+'))
+        validator=attr.validators.matches_re(DOI_PATTERN))
     title = attr.ib()
     creators = attr.ib(converter=get_creators, default=attr.Factory(list))
     year = attr.ib(default=None)
@@ -185,7 +185,7 @@ class Record:
             creators=[c['name'] for c in d['metadata']['creators']],
             year=d['metadata']['publication_date'].split('-')[0],
             version=d['metadata'].get('version'),
-            concept_doi=d['conceptdoi'],
+            concept_doi=d.get('conceptdoi'),  # There are old records with "concept_rec_id" ...
             # FIXME: Check Zenodo API periodically to see whether URLs are correct now.
             download_urls=[f['links']['self'].replace('/api/', '/') for f in d.get('files')],
         )
@@ -257,13 +257,30 @@ class Record:
             url='https://doi.org/{}'.format(self.doi),
         )
         if self.license:
-            lic = licenses.find(self.license)
-            src['copyright'] = lic.name if lic else self.license
+            src['copyright'] = self.license
         return src.bibtex()
 
-    def citation(self, api) -> str:
+    def get_citation(self, api) -> str:
         # curl -H "Accept:text/x-bibliography" "https://zenodo.org/api/records/7079637?style=apa
         return api.records(
             id_=self.id,
             params=dict(style='apa'),
             headers=dict(Accept='text/x-bibliography')).strip()
+
+    # ---------------------------------------------------------------------------------------------
+    # legacy API:
+    # ---------------------------------------------------------------------------------------------
+    @staticmethod
+    def from_doi(doi):  # pragma: no cover
+        from cldfzenodo import API
+        return API.get_record(doi=doi)
+
+    @staticmethod
+    def from_concept_doi(doi, version_tag):  # pragma: no cover
+        from cldfzenodo import API
+        return API.get_record(conceptdoi=doi, version=version_tag)
+
+    @property
+    def citation(self):  # pragma: no cover
+        from cldfzenodo import API
+        return self.get_citation(API)
