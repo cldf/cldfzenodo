@@ -1,5 +1,11 @@
 # Changes
 
+## [Unreleased]
+
+- Add Python 3.12 to supported versions.
+- Added API method to retrieve release information from GitHub/Zenodo.
+
+
 ## [2.0.0] - 2023-10-20
 
 Zenodo's upgrade from Oct. 13, 2023 brought a couple of breaking changes for the Zenodo API.

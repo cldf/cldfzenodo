@@ -1,11 +1,15 @@
 import re
 import json
+import shlex
 import typing
+import subprocess
 import urllib.error
 import urllib.parse
 import urllib.request
 
+from pycldf import Source
 from pycldf.ext.discovery import DatasetResolver
+from clldutils.path import ensure_cmd
 
 from cldfzenodo.record import Record, ZENODO_DOI_FORMAT, ZENODO_DOI_PATTERN, get_doi
 
@@ -188,6 +192,69 @@ class Api:
             yield from res.next()  # pragma: no cover
         if res.error:
             return res  # pragma: no cover
+
+    def get_github_release_info(
+            self,
+            repos: str,
+            tag: typing.Optional[str] = None,
+            bibid: typing.Optional[str] = None
+    ) -> typing.Tuple[
+        typing.Union[str, None],
+        typing.Union[str, None],
+        typing.Union[str, None],
+        typing.Union[Source, None]
+    ]:
+        """
+        Get information about a GitHub repository release that has been archived with Zenodo.
+
+        We assume, that the DOI of the upload on Zenodo has been added to the release description
+        on GitHub.
+
+        :param repos: GitHub repository specifier in the form `org/repo`.
+        :param tag: Optional version tag.
+        :param bibid: Optional identifier to use for the BibTeX record.
+        :return: A quadruple (tag, DOI, APA citation, BibTeX record)
+        """
+        def gh(args):
+            return subprocess.check_output([ensure_cmd('gh')] + shlex.split(args)).decode('utf8')
+
+        version_pattern = re.compile(r'(?P<tag>v[0-9]+\.[0-9]+(\.[0-9]+)?)')
+        doi_pattern = re.compile(r'https://doi\.org/(?P<doi>10\.5281/zenodo\.[0-9]+)')
+
+        if not tag:
+            latest = gh('release list -L 1 -R {}'.format(repos))
+            if not latest:
+                return None, None, None, None  # pragma: no cover
+            match = version_pattern.search(latest)
+            assert match, latest
+            tag = match.group('tag')
+
+        info = gh('release view {} -R {}'.format(tag, repos))
+        match = None
+        for match in doi_pattern.finditer(info):
+            pass
+        if match:
+            doi = match.group('doi')
+            if doi:
+                cit = self.records(
+                    id_=ZENODO_DOI_PATTERN.match(doi).group('recid'),
+                    params=dict(style='apa'),
+                    headers=dict(Accept='text/x-bibliography')).strip()
+                bib = self.records(
+                    id_=ZENODO_DOI_PATTERN.match(doi).group('recid'),
+                    params=dict(style='bibtex'),
+                    headers=dict(Accept='text/x-bibliography')).strip()
+                bib = Source.from_bibtex(re.sub(
+                    r', (?P<field>[a-zA-Z]+)=',
+                    lambda m: ',\n  {} = '.format(m.group('field')),
+                    bib), _check_id=False)
+                bib.id = bibid or repos.replace('/', '_')
+                del bib['abstractNote']
+                del bib['month']
+                bib['edition'] = tag
+                bib['type'] = 'Data set'
+                return tag, doi, cit, bib
+        return tag, None, None, None  # pragma: no cover
 
 
 # Since an Api instance does some caching, we provide one instance as module global.
