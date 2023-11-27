@@ -1,6 +1,6 @@
 # Changes
 
-## [Unreleased]
+## [2.1.0] - 2023-11-27
 
 - Add Python 3.12 to supported versions.
 - Added API method to retrieve release information from GitHub/Zenodo.
