@@ -228,6 +228,8 @@ class Record:
             self._download(self.github_repos.release_url, dest, log=log)
         else:
             for url in self.download_urls:
+                if url.endswith('/content'):
+                    url = url[:-len('/content')]  # pragma: no cover
                 self._download(url, dest, log=log)
         inner = list(dest.iterdir())
         if unwrap and is_empty and len(inner) == 1 and inner[0].is_dir():

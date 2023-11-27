@@ -249,8 +249,9 @@ class Api:
                     lambda m: ',\n  {} = '.format(m.group('field')),
                     bib), _check_id=False)
                 bib.id = bibid or repos.replace('/', '_')
-                del bib['abstractNote']
-                del bib['month']
+                for field in ['abstractNote', 'month']:
+                    if field in bib:
+                        del bib[field]
                 bib['edition'] = tag
                 bib['type'] = 'Data set'
                 return tag, doi, cit, bib
