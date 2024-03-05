@@ -1,5 +1,11 @@
 # Changes
 
+## [2.1.1] - 2024-03-05
+
+- Make `version_tag` argument to `from_concept_doi` optional, to make it more transparent
+  that this is the method to call to get the latest version for a concept DOI.
+
+
 ## [2.1.0] - 2023-11-27
 
 - Add Python 3.12 to supported versions.

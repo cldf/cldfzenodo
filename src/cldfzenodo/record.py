@@ -278,7 +278,7 @@ class Record:
         return API.get_record(doi=doi)
 
     @staticmethod
-    def from_concept_doi(doi, version_tag):  # pragma: no cover
+    def from_concept_doi(doi, version_tag=None):  # pragma: no cover
         from cldfzenodo import API
         return API.get_record(conceptdoi=doi, version=version_tag)
 
