@@ -1,7 +1,7 @@
 # Changes
 
 
-## unreleased
+## [2.1.2] - 2024-10-15
 
 - Fix to accomodate change in Zenodo's communities search API.
 - Run tests on py 3.13.
