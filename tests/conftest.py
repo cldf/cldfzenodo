@@ -18,7 +18,7 @@ def urlopen(fixtures_dir):
             return self.path.read_bytes()
 
     def f(req):
-        if '/communities?' in req.full_url:
+        if '/communities/' in req.full_url and '/' not in req.full_url.split('communities/')[1]:
             return Response('communities.json')
         elif 'doi%3A' in req.full_url:
             return Response('record.json')

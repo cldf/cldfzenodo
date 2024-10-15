@@ -124,13 +124,8 @@ class Api:
         what = ''
         if community:
             if community not in self.__communities__:
-                res = get_hits(self('communities', params=dict(q=community)))
-                for r in res:
-                    if r['slug'] == community:
-                        self.__communities__[community] = r['id']
-                        break
-                else:
-                    raise ValueError('Community {} not found'.format(community))
+                self.__communities__[community] = json.loads(
+                    self('communities', community))['id']
             what = 'communities/{}/'.format(self.__communities__[community])
         what += 'records'
         return self(what, id_=id_, params=params, headers=headers)
