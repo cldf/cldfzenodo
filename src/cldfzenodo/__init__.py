@@ -7,7 +7,7 @@ from cldfzenodo.api import *
 from cldfzenodo import oai
 from cldfzenodo import search
 
-__version__ = '2.1.2'
+__version__ = '2.1.3.dev0'
 # flake8: noqa
 
 # -------------------------------------------------------------------------------------------------
