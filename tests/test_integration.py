@@ -38,8 +38,10 @@ def get_10(iterator):  # pragma: no cover
 def test_communities(API):  # pragma: no cover
     with API:
         res = get_10(API.iter_records(community='cldf-datasets'))
+    print(res[0].communities)
+    print(res[0].doi)
     assert len(res) == 10
-    assert all('cldf-datasets' in r.communities for r in res)
+    assert all('cldf-datasets' in r.communities for r in res), res[0].communities
     assert len({r.doi for r in res}) == 10
     assert API.scoped_requests == 3
 

@@ -1,5 +1,11 @@
 # Changes
 
+
+## unreleased
+
+- Fix to accomodate change in Zenodo's communities search API.
+
+
 ## [2.1.1] - 2024-03-05
 
 - Make `version_tag` argument to `from_concept_doi` optional, to make it more transparent
