@@ -153,6 +153,7 @@ class Record:
     closed_access = attr.ib(default=False, validator=attr.validators.instance_of(bool))
     version = attr.ib(default=None)
     concept_doi = attr.ib(default=None)
+    metadata = attr.ib(default=attr.Factory(dict))
 
     def __attrs_post_init__(self):
         if not self.download_url:
@@ -188,6 +189,7 @@ class Record:
             concept_doi=d.get('conceptdoi'),  # There are old records with "concept_rec_id" ...
             # FIXME: Check Zenodo API periodically to see whether URLs are correct now.
             download_urls=[f['links']['self'].replace('/api/', '/') for f in d.get('files')],
+            metadata=d['metadata']
         )
         if 'license' in d['metadata']:
             lic = d['metadata']['license']
