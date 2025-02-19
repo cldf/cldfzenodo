@@ -58,6 +58,7 @@ def test_Record(record):
     assert record.version == 'v1.1'
     assert record.concept_doi == '10.5281/zenodo.4691101'
     assert 'Greenhill, Simon J. and Haynie, Hannah J.' in record.bibtex
+    assert record.metadata['resource_type']['type'] == 'dataset'
 
     rec = Record(doi='https://doi.org/10.5281/zenodo.4691101', title='', closed_access=True)
     assert rec.id == '4691101'

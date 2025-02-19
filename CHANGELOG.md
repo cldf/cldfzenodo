@@ -1,5 +1,9 @@
 # Changes
 
+## unreleased
+
+- Make all metadata from Zenodo available from a `Record` instance.
+
 
 ## [2.1.2] - 2024-10-15
 
