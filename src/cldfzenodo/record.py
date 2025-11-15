@@ -247,22 +247,27 @@ class Record:
                 if (condition is None) or condition(ds):
                     return Dataset.from_metadata(ds.copy(dest, mdname=mdname))
 
-    @property
-    def bibtex(self) -> str:
+    def get_bibtex(self, bibid=None) -> str:
         src = Source(
             'misc',
-            self.doi.split('/')[-1].replace('.', '-'),
+            bibid or self.doi.split('/')[-1].replace('.', '-'),
             author=' and '.join(self.creators),
             title=self.title,
             keywords=', '.join(self.keywords),
             publisher='Zenodo',
             year=self.year,
+            edition=self.version,
             doi=self.doi,
+            type='Data set',
             url='https://doi.org/{}'.format(self.doi),
         )
         if self.license:
             src['copyright'] = self.license
         return src.bibtex()
+
+    @property
+    def bibtex(self) -> str:
+        return self.get_bibtex()
 
     def get_citation(self, api) -> str:
         # curl -H "Accept:text/x-bibliography" "https://zenodo.org/api/records/7079637?style=apa

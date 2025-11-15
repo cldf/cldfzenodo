@@ -3,6 +3,7 @@
 ## unreleased
 
 - Make all metadata from Zenodo available from a `Record` instance.
+- Allow retrieval of a customized BibTeX record.
 
 
 ## [2.1.2] - 2024-10-15
