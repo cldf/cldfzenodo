@@ -1,6 +1,6 @@
 # Changes
 
-## unreleased
+## [2.2.0] - 2025-11-17
 
 - Make all metadata from Zenodo available from a `Record` instance.
 - Allow retrieval of a customized BibTeX record.
