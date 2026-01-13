@@ -75,7 +75,7 @@ class Api:
     __base_url__ = "https://zenodo.org/api/"
     __communities__ = {}  # We cash community identifiers.
 
-    def __init__(self, page_size=100):
+    def __init__(self, page_size=25):
         self.page_size = page_size
 
     def __call__(self,

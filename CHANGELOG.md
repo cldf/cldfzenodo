@@ -1,5 +1,10 @@
 # Changes
 
+## [unreleased]
+
+- Adapt the default page size for API calls to the new limit for unauthenticated requests.
+
+
 ## [2.2.0] - 2025-11-17
 
 - Make all metadata from Zenodo available from a `Record` instance.
