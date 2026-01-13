@@ -1,6 +1,6 @@
 # Changes
 
-## [unreleased]
+## [2.2.1] - 2026-01-13
 
 - Adapt the default page size for API calls to the new limit for unauthenticated requests.
 - Run test suite on py3.14.
