@@ -1,7 +1,11 @@
+"""
+This module provides an API to retrieve CLDF datasets deposited on Zenodo.
+"""
 import re
 import json
 import shlex
 from typing import Optional, Union
+import pathlib
 import subprocess
 import urllib.error
 import urllib.parse
@@ -18,6 +22,7 @@ __all__ = ["API", "Api", "ZenodoResolver"]
 
 
 def get_hits(res: Union[str, dict, list]) -> list[dict]:
+    """Extract the hits from a search result."""
     if isinstance(res, str):
         res = json.loads(res)
     return res if isinstance(res, list) else res["hits"]["hits"]
@@ -31,11 +36,13 @@ def q(**kw) -> str:
     """
     res = kw.pop("_q", "") or ""
     if kw:
-        res += "" + " ".join('{}:"{}"'.format(k, v) for k, v in kw.items())
+        res += "" + " ".join(f'{k}:"{v}"' for k, v in kw.items())
     return res.strip()
 
 
-class Results:
+class Results:  # pylint: disable=R0903
+    """Object to step through Zenodo search results."""
+
     def __init__(
         self,
         api: "Api",
@@ -56,6 +63,7 @@ class Results:
         self.error = None
 
     def next(self) -> list[Record]:
+        """Return the next batch, i.e. page, of search results."""
         self._page += 1
         params = {
             "sort": "-mostrecent",
@@ -67,7 +75,6 @@ class Results:
             hits = get_hits(self.api.records(community=self.community, params=params))
         except urllib.error.HTTPError as e:  # pragma: no cover
             # We want to be able to resume retrieval of results.
-            hits = []
             self.error = e
             self._page -= 1
             raise
@@ -76,10 +83,12 @@ class Results:
 
 
 class Api:
+    """An API to search Zenodo."""
+
     __base_url__ = "https://zenodo.org/api/"
     __communities__ = {}  # We cash community identifiers.
 
-    def __init__(self, page_size=25):
+    def __init__(self, page_size: int = 25):
         self.page_size = page_size
 
     def __call__(
@@ -103,7 +112,7 @@ class Api:
         params = params or {}
         headers = headers or {}
         comps = urllib.parse.urlparse(
-            self.__base_url__ + "{}{}".format(what, "/" + id_ if id_ else "")
+            self.__base_url__ + f"{what}{'/' + id_ if id_ else ''}"
         )
         url = urllib.parse.urlunparse(
             list(comps[:3]) + ["", urllib.parse.urlencode(params), ""]
@@ -138,7 +147,7 @@ class Api:
                 self.__communities__[community] = json.loads(
                     self("communities", community)
                 )["id"]
-            what = "communities/{}/".format(self.__communities__[community])
+            what = f"communities/{self.__communities__[community]}/"
         what += "records"
         return self(what, id_=id_, params=params, headers=headers)
 
@@ -149,10 +158,11 @@ class Api:
         yield from self.iter_records(conceptdoi=get_doi(conceptdoi), allversions=True)
 
     @staticmethod
-    def _first_record(res):
+    def _first_record(res) -> Optional[Record]:
         hits = get_hits(res)
         if hits:
             return Record.from_dict(hits[0])
+        return None  # pragma: no cover
 
     def get_record(
         self,
@@ -174,17 +184,18 @@ class Api:
             doi = get_doi(doi)
             assert not conceptdoi
             return self._first_record(
-                self.records(params=dict(allversions="true", q=q(doi=doi)))
+                self.records(params={"allversions": "true", "q": q(doi=doi)})
             )
         assert conceptdoi
         conceptdoi = get_doi(conceptdoi)
         if not version:
             return self._first_record(
-                self.records(params=dict(q=q(conceptdoi=conceptdoi)))
+                self.records(params={"q": q(conceptdoi=conceptdoi)})
             )
         for rec in self.iter_records(conceptdoi=conceptdoi, allversions=True):
             if rec.version.lstrip("v") == version.lstrip("v"):
                 return rec
+        return None
 
     def iter_records(
         self,
@@ -237,14 +248,14 @@ class Api:
         doi_pattern = re.compile(r"https://doi\.org/(?P<doi>10\.5281/zenodo\.[0-9]+)")
 
         if not tag:
-            latest = gh("release list -L 1 -R {}".format(repos))
+            latest = gh(f"release list -L 1 -R {repos}")
             if not latest:
                 return None, None, None, None  # pragma: no cover
             match = version_pattern.search(latest)
             assert match, latest
             tag = match.group("tag")
 
-        info = gh("release view {} -R {}".format(tag, repos))
+        info = gh(f"release view {tag} -R {repos}")
         match = None
         for match in doi_pattern.finditer(info):
             pass
@@ -253,18 +264,18 @@ class Api:
             if doi:
                 cit = self.records(
                     id_=ZENODO_DOI_PATTERN.match(doi).group("recid"),
-                    params=dict(style="apa"),
-                    headers=dict(Accept="text/x-bibliography"),
+                    params={"style": "apa"},
+                    headers={"Accept": "text/x-bibliography"},
                 ).strip()
                 bib = self.records(
                     id_=ZENODO_DOI_PATTERN.match(doi).group("recid"),
-                    params=dict(style="bibtex"),
-                    headers=dict(Accept="text/x-bibliography"),
+                    params={"style": "bibtex"},
+                    headers={"Accept": "text/x-bibliography"},
                 ).strip()
                 bib = Source.from_bibtex(
                     re.sub(
                         r", (?P<field>[a-zA-Z]+)=",
-                        lambda m: ",\n  {} = ".format(m.group("field")),
+                        lambda m: f",\n  {m.group('field')} = ",
                         bib,
                     ),
                     _check_id=False,
@@ -283,12 +294,14 @@ class Api:
 API = Api()
 
 
-class ZenodoResolver(DatasetResolver):
-    def __call__(self, loc, download_dir):
+class ZenodoResolver(DatasetResolver):  # pylint: disable=R0903
+    """Resolve location and download CLDF datasets deposited on Zenodo."""
+
+    def __call__(self, loc, download_dir) -> Optional[pathlib.Path]:
         doi = None
         m = ZENODO_DOI_PATTERN.search(loc)
         if m:
-            doi = loc[m.start(): m.end()]
+            doi = loc[m.start() : m.end()]  # noqa: E203
         else:
             m = re.search(r"zenodo\.org/record(s)?/(?P<number>[0-9]+)", loc)
             if m:
@@ -296,3 +309,4 @@ class ZenodoResolver(DatasetResolver):
         if doi:
             rec = API.get_record(doi=doi) or API.get_record(conceptdoi=doi)
             return rec.download(download_dir)
+        return None  # pragma: no cover
