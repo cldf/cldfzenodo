@@ -1,5 +1,11 @@
 # Changes
 
+## Unreleased
+
+- Removed deprecated functionality.
+- Removed dependency on `attrs`.
+
+
 ## [2.2.1] - 2026-01-13
 
 - Adapt the default page size for API calls to the new limit for unauthenticated requests.

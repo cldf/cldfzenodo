@@ -1,11 +1,12 @@
 import re
 import json
 import shlex
-import typing
+from typing import Optional, Union
 import subprocess
 import urllib.error
 import urllib.parse
 import urllib.request
+from collections.abc import Generator
 
 from pycldf import Source
 from pycldf.ext.discovery import DatasetResolver
@@ -13,13 +14,13 @@ from clldutils.path import ensure_cmd
 
 from cldfzenodo.record import Record, ZENODO_DOI_FORMAT, ZENODO_DOI_PATTERN, get_doi
 
-__all__ = ['API', 'Api', 'ZenodoResolver']
+__all__ = ["API", "Api", "ZenodoResolver"]
 
 
-def get_hits(res: typing.Union[str, dict, list]) -> typing.List[dict]:
+def get_hits(res: Union[str, dict, list]) -> list[dict]:
     if isinstance(res, str):
         res = json.loads(res)
-    return res if isinstance(res, list) else res['hits']['hits']
+    return res if isinstance(res, list) else res["hits"]["hits"]
 
 
 def q(**kw) -> str:
@@ -28,18 +29,20 @@ def q(**kw) -> str:
 
     See https://help.zenodo.org/guides/search/ for details.
     """
-    res = kw.pop('_q', '') or ''
+    res = kw.pop("_q", "") or ""
     if kw:
-        res += '' + ' '.join('{}:"{}"'.format(k, v) for k, v in kw.items())
+        res += "" + " ".join('{}:"{}"'.format(k, v) for k, v in kw.items())
     return res.strip()
 
 
 class Results:
-    def __init__(self,
-                 api: 'Api',
-                 allversions: typing.Optional[bool] = False,
-                 community: typing.Optional[str] = None,
-                 **params: str):
+    def __init__(
+        self,
+        api: "Api",
+        allversions: Optional[bool] = False,
+        community: Optional[str] = None,
+        **params: str,
+    ):
         """
         :param params: URL parameters (see https://developers.zenodo.org/#records)
         """
@@ -47,17 +50,18 @@ class Results:
         self.params = params
         self.community = community
         if allversions:
-            self.params['allversions'] = 'true'
+            self.params["allversions"] = "true"
         self._page = 0
         self.more = True
         self.error = None
 
-    def next(self) -> typing.List[Record]:
+    def next(self) -> list[Record]:
         self._page += 1
         params = {
-            'sort': '-mostrecent',
-            'page': str(self._page),
-            'size': str(self.api.page_size)}
+            "sort": "-mostrecent",
+            "page": str(self._page),
+            "size": str(self.api.page_size),
+        }
         params.update(self.params)
         try:
             hits = get_hits(self.api.records(community=self.community, params=params))
@@ -78,12 +82,14 @@ class Api:
     def __init__(self, page_size=25):
         self.page_size = page_size
 
-    def __call__(self,
-                 what: str,
-                 id_: typing.Optional[str] = None,
-                 params: typing.Optional[typing.Dict[str, str]] = None,
-                 headers: typing.Optional[typing.Dict[str, str]] = None,
-                 _verbose: bool = False) -> str:
+    def __call__(
+        self,
+        what: str,
+        id_: Optional[str] = None,
+        params: Optional[dict[str, str]] = None,
+        headers: Optional[dict[str, str]] = None,
+        _verbose: bool = False,
+    ) -> str:
         """
         Perform an API call and return the response body as str.
 
@@ -97,20 +103,25 @@ class Api:
         params = params or {}
         headers = headers or {}
         comps = urllib.parse.urlparse(
-            self.__base_url__ + '{}{}'.format(what, '/' + id_ if id_ else ''))
-        url = urllib.parse.urlunparse(list(comps[:3]) + ['', urllib.parse.urlencode(params), ''])
+            self.__base_url__ + "{}{}".format(what, "/" + id_ if id_ else "")
+        )
+        url = urllib.parse.urlunparse(
+            list(comps[:3]) + ["", urllib.parse.urlencode(params), ""]
+        )
         req = urllib.request.Request(url)
         for k, v in headers.items():
             req.add_header(k, v)
         if _verbose:  # pragma: no cover
             print(url)
-        return urllib.request.urlopen(req).read().decode('utf8')
+        return urllib.request.urlopen(req).read().decode("utf8")
 
-    def records(self,
-                id_: typing.Optional[str] = None,
-                community: typing.Optional[str] = None,
-                params: typing.Optional[typing.Dict[str, str]] = None,
-                headers: typing.Optional[typing.Dict[str, str]] = None) -> str:
+    def records(
+        self,
+        id_: Optional[str] = None,
+        community: Optional[str] = None,
+        params: Optional[dict[str, str]] = None,
+        headers: Optional[dict[str, str]] = None,
+    ) -> str:
         """
         Perfom an API call to the records resource (possibly limited to one community).
 
@@ -121,16 +132,17 @@ class Api:
         :param headers: HTTP request headers.
         :return: Body of the response as text.
         """
-        what = ''
+        what = ""
         if community:
             if community not in self.__communities__:
                 self.__communities__[community] = json.loads(
-                    self('communities', community))['id']
-            what = 'communities/{}/'.format(self.__communities__[community])
-        what += 'records'
+                    self("communities", community)
+                )["id"]
+            what = "communities/{}/".format(self.__communities__[community])
+        what += "records"
         return self(what, id_=id_, params=params, headers=headers)
 
-    def iter_versions(self, conceptdoi: str) -> typing.Generator[Record, None, None]:
+    def iter_versions(self, conceptdoi: str) -> Generator[Record, None, None]:
         """
         Retrieve all versions recorded for a concept DOI.
         """
@@ -142,10 +154,12 @@ class Api:
         if hits:
             return Record.from_dict(hits[0])
 
-    def get_record(self,
-                   doi: typing.Optional[str] = None,
-                   conceptdoi: typing.Optional[str] = None,
-                   version: typing.Optional[str] = None) -> typing.Union[Record, None]:
+    def get_record(
+        self,
+        doi: Optional[str] = None,
+        conceptdoi: Optional[str] = None,
+        version: Optional[str] = None,
+    ) -> Optional[Record]:
         """
         Retrieve a record specified by Zenodo DOI, given as URL or plain.
 
@@ -159,21 +173,26 @@ class Api:
         if doi:
             doi = get_doi(doi)
             assert not conceptdoi
-            return self._first_record(self.records(params=dict(allversions='true', q=q(doi=doi))))
+            return self._first_record(
+                self.records(params=dict(allversions="true", q=q(doi=doi)))
+            )
         assert conceptdoi
         conceptdoi = get_doi(conceptdoi)
         if not version:
-            return self._first_record(self.records(params=dict(q=q(conceptdoi=conceptdoi))))
+            return self._first_record(
+                self.records(params=dict(q=q(conceptdoi=conceptdoi)))
+            )
         for rec in self.iter_records(conceptdoi=conceptdoi, allversions=True):
-            if rec.version.lstrip('v') == version.lstrip('v'):
+            if rec.version.lstrip("v") == version.lstrip("v"):
                 return rec
 
-    def iter_records(self,
-                     community: typing.Optional[str] = None,
-                     keyword: typing.Optional[str] = None,
-                     allversions: typing.Optional[bool] = False,
-                     **kw
-                     ) -> typing.Generator[Record, None, Results]:
+    def iter_records(
+        self,
+        community: Optional[str] = None,
+        keyword: Optional[str] = None,
+        allversions: Optional[bool] = False,
+        **kw,
+    ) -> Generator[Record, None, Optional[Results]]:
         """
         Retrieve records matching various search criteria.
 
@@ -185,25 +204,18 @@ class Api:
         :return: A generator of records.
         """
         if keyword:
-            kw['keywords'] = keyword
+            kw["keywords"] = keyword
         res = Results(self, allversions=allversions, community=community, q=q(**kw))
         yield from res.next()
         while res.more:
             yield from res.next()  # pragma: no cover
         if res.error:
             return res  # pragma: no cover
+        return None
 
     def get_github_release_info(
-            self,
-            repos: str,
-            tag: typing.Optional[str] = None,
-            bibid: typing.Optional[str] = None
-    ) -> typing.Tuple[
-        typing.Union[str, None],
-        typing.Union[str, None],
-        typing.Union[str, None],
-        typing.Union[Source, None]
-    ]:
+        self, repos: str, tag: Optional[str] = None, bibid: Optional[str] = None
+    ) -> tuple[Optional[str], Optional[str], Optional[str], Optional[Source]]:
         """
         Get information about a GitHub repository release that has been archived with Zenodo.
 
@@ -215,45 +227,54 @@ class Api:
         :param bibid: Optional identifier to use for the BibTeX record.
         :return: A quadruple (tag, DOI, APA citation, BibTeX record)
         """
-        def gh(args):
-            return subprocess.check_output([ensure_cmd('gh')] + shlex.split(args)).decode('utf8')
 
-        version_pattern = re.compile(r'(?P<tag>v[0-9]+\.[0-9]+(\.[0-9]+)?)')
-        doi_pattern = re.compile(r'https://doi\.org/(?P<doi>10\.5281/zenodo\.[0-9]+)')
+        def gh(args):
+            return subprocess.check_output(
+                [ensure_cmd("gh")] + shlex.split(args)
+            ).decode("utf8")
+
+        version_pattern = re.compile(r"(?P<tag>v[0-9]+\.[0-9]+(\.[0-9]+)?)")
+        doi_pattern = re.compile(r"https://doi\.org/(?P<doi>10\.5281/zenodo\.[0-9]+)")
 
         if not tag:
-            latest = gh('release list -L 1 -R {}'.format(repos))
+            latest = gh("release list -L 1 -R {}".format(repos))
             if not latest:
                 return None, None, None, None  # pragma: no cover
             match = version_pattern.search(latest)
             assert match, latest
-            tag = match.group('tag')
+            tag = match.group("tag")
 
-        info = gh('release view {} -R {}'.format(tag, repos))
+        info = gh("release view {} -R {}".format(tag, repos))
         match = None
         for match in doi_pattern.finditer(info):
             pass
         if match:
-            doi = match.group('doi')
+            doi = match.group("doi")
             if doi:
                 cit = self.records(
-                    id_=ZENODO_DOI_PATTERN.match(doi).group('recid'),
-                    params=dict(style='apa'),
-                    headers=dict(Accept='text/x-bibliography')).strip()
+                    id_=ZENODO_DOI_PATTERN.match(doi).group("recid"),
+                    params=dict(style="apa"),
+                    headers=dict(Accept="text/x-bibliography"),
+                ).strip()
                 bib = self.records(
-                    id_=ZENODO_DOI_PATTERN.match(doi).group('recid'),
-                    params=dict(style='bibtex'),
-                    headers=dict(Accept='text/x-bibliography')).strip()
-                bib = Source.from_bibtex(re.sub(
-                    r', (?P<field>[a-zA-Z]+)=',
-                    lambda m: ',\n  {} = '.format(m.group('field')),
-                    bib), _check_id=False)
-                bib.id = bibid or repos.replace('/', '_')
-                for field in ['abstractNote', 'month']:
+                    id_=ZENODO_DOI_PATTERN.match(doi).group("recid"),
+                    params=dict(style="bibtex"),
+                    headers=dict(Accept="text/x-bibliography"),
+                ).strip()
+                bib = Source.from_bibtex(
+                    re.sub(
+                        r", (?P<field>[a-zA-Z]+)=",
+                        lambda m: ",\n  {} = ".format(m.group("field")),
+                        bib,
+                    ),
+                    _check_id=False,
+                )
+                bib.id = bibid or repos.replace("/", "_")
+                for field in ["abstractNote", "month"]:
                     if field in bib:
                         del bib[field]
-                bib['edition'] = tag
-                bib['type'] = 'Data set'
+                bib["edition"] = tag
+                bib["type"] = "Data set"
                 return tag, doi, cit, bib
         return tag, None, None, None  # pragma: no cover
 
@@ -267,11 +288,11 @@ class ZenodoResolver(DatasetResolver):
         doi = None
         m = ZENODO_DOI_PATTERN.search(loc)
         if m:
-            doi = loc[m.start():m.end()]
+            doi = loc[m.start(): m.end()]
         else:
-            m = re.search(r'zenodo\.org/record(s)?/(?P<number>[0-9]+)', loc)
+            m = re.search(r"zenodo\.org/record(s)?/(?P<number>[0-9]+)", loc)
             if m:
-                doi = ZENODO_DOI_FORMAT.format(m.group('number'))
+                doi = ZENODO_DOI_FORMAT.format(m.group("number"))
         if doi:
             rec = API.get_record(doi=doi) or API.get_record(conceptdoi=doi)
             return rec.download(download_dir)

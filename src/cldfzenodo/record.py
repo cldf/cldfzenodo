@@ -2,7 +2,6 @@
 Zenodo deposit record, as described by the DCAT metadata.
 """
 
-import dataclasses
 import io
 import re
 import shutil
@@ -10,6 +9,7 @@ from typing import Optional, Union, Any
 import pathlib
 import zipfile
 import tempfile
+import dataclasses
 import urllib.parse
 import urllib.request
 
