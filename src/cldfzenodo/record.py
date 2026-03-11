@@ -1,25 +1,32 @@
 """
 Zenodo deposit record, as described by the DCAT metadata.
 """
+
+import dataclasses
 import io
 import re
 import shutil
-import typing
+from typing import Optional, Union, Any
 import pathlib
 import zipfile
 import tempfile
 import urllib.parse
 import urllib.request
 
-import attr
 import nameparser
 from pycldf import iter_datasets, Source, Dataset
 
-__all__ = ['Record', 'GithubRepos', 'ZENODO_DOI_FORMAT', 'ZENODO_DOI_PATTERN', 'get_doi']
+__all__ = [
+    "Record",
+    "GithubRepos",
+    "ZENODO_DOI_FORMAT",
+    "ZENODO_DOI_PATTERN",
+    "get_doi",
+]
 
 ZENODO_DOI_PATTERN = re.compile(r"10\.5281/zenodo\.(?P<recid>[0-9]+)")
 DOI_PATTERN = re.compile(r"10\.[0-9.]+/[^/]+")
-ZENODO_DOI_FORMAT = '10.5281/zenodo.{}'
+ZENODO_DOI_FORMAT = "10.5281/zenodo.{}"
 NS = dict(
     rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     adms="http://www.w3.org/ns/adms#",
@@ -45,7 +52,7 @@ NS = dict(
 )
 
 
-@attr.s
+@dataclasses.dataclass
 class GithubRepos:
     """
     Zenodo deposits via the GitHub-Zenodo bridge carry enough metadata to retrieve the source
@@ -56,34 +63,36 @@ class GithubRepos:
     :ivar str name: repository name
     :ivar str tag: release tag of the version of the repository that was deposited on Zenodo
     """
-    org = attr.ib()
-    name = attr.ib()
-    tag = attr.ib(default=None)
+
+    org: str
+    name: str
+    tag: str = None
 
     @classmethod
-    def from_url(cls, url: str) -> 'GithubRepos':
+    def from_url(cls, url: str) -> "GithubRepos":
         url = urllib.parse.urlparse(url)
-        if url.netloc == 'github.com':
-            path = url.path.split('/')
+        if url.netloc == "github.com":
+            path = url.path.split("/")
             return cls(
                 org=path[1],
                 name=path[2],
-                tag=path[4] if len(path) > 4 and path[3] == 'tree' else None)
+                tag=path[4] if len(path) > 4 and path[3] == "tree" else None,
+            )
 
     @property
     def clone_url(self) -> str:
         """
         :return: A URL suitable for passing to `git clone`.
         """
-        return 'https://github.com/{0.org}/{0.name}.git'.format(self)
+        return "https://github.com/{0.org}/{0.name}.git".format(self)
 
     @property
-    def release_url(self) -> typing.Union[None, str]:
+    def release_url(self) -> Union[None, str]:
         """
         :return: The URL of a zipped release on GitHub.
         """
         if self.tag:
-            return 'https://github.com/{0.org}/{0.name}/archive/refs/tags/{0.tag}.zip'.format(self)
+            return f"https://github.com/{self.org}/{self.name}/archive/refs/tags/{self.tag}.zip"
 
 
 def get_doi(doi_or_url: str) -> str:
@@ -105,15 +114,15 @@ def get_doi(doi_or_url: str) -> str:
     url, doi = urllib.parse.urlparse(doi_or_url), None
     if not url.netloc:
         doi = url.path
-    elif url.netloc == 'zenodo.org':
-        if url.path.startswith('/doi/'):
-            doi = url.path.replace('/doi/', '')
+    elif url.netloc == "zenodo.org":
+        if url.path.startswith("/doi/"):
+            doi = url.path.replace("/doi/", "")
         else:
-            doi = ZENODO_DOI_FORMAT.format(url.path.split('/')[-1])
-    elif url.netloc == 'doi.org':
+            doi = ZENODO_DOI_FORMAT.format(url.path.split("/")[-1])
+    elif url.netloc == "doi.org":
         doi = url.path[1:]
     else:
-        raise ValueError('Unknown DOI format')
+        raise ValueError("Unknown DOI format")
     if not (ZENODO_DOI_PATTERN.fullmatch(doi) or DOI_PATTERN.fullmatch(doi)):
         raise ValueError('Not a DOI: "{}"'.format(doi))
     return doi
@@ -125,12 +134,12 @@ def get_creators(names):
         name = nameparser.HumanName(name)
         first = name.first
         if name.middle:
-            first += ' ' + name.middle
-        res.append('{}, {}'.format(name.last, first))
+            first += " " + name.middle
+        res.append("{}, {}".format(name.last, first))
     return res
 
 
-@attr.s
+@dataclasses.dataclass
 class Record:
     """
     Metadata of a Zenodo deposit
@@ -139,28 +148,32 @@ class Record:
     :ivar title: The title of the record.
     :ivar typing.List[str] creators: List of names of the creators of the record.
     """
-    doi = attr.ib(
-        converter=get_doi,
-        validator=attr.validators.matches_re(DOI_PATTERN))
-    title = attr.ib()
-    creators = attr.ib(converter=get_creators, default=attr.Factory(list))
-    year = attr.ib(default=None)
-    license = attr.ib(default=None)
-    download_urls = attr.ib(default=attr.Factory(list))
-    keywords = attr.ib(default=attr.Factory(list))
-    communities = attr.ib(default=attr.Factory(list), converter=lambda c: [i for i in c if i])
-    github_repos = attr.ib(default=None)
-    closed_access = attr.ib(default=False, validator=attr.validators.instance_of(bool))
-    version = attr.ib(default=None)
-    concept_doi = attr.ib(default=None)
-    metadata = attr.ib(default=attr.Factory(dict))
 
-    def __attrs_post_init__(self):
+    doi: str
+    title: str
+    creators: list[str] = dataclasses.field(default_factory=list)
+    year: Optional[str] = None
+    license: Optional[str] = None
+    download_urls: list[str] = dataclasses.field(default_factory=list)
+    keywords: list[str] = dataclasses.field(default_factory=list)
+    communities: list[str] = dataclasses.field(default_factory=list)
+    github_repos: Optional[str] = None
+    closed_access: bool = False
+    version: Optional[str] = None
+    concept_doi: Optional[str] = None
+    metadata: dict[str, Any] = dataclasses.field(default_factory=dict)
+
+    def __post_init__(self):
+        self.doi = get_doi(self.doi)
+        assert DOI_PATTERN.match(self.doi)
+        self.creators = get_creators(self.creators)
+        self.communities = [i for i in self.communities if i]
+        assert isinstance(self.closed_access, bool)
         if not self.download_url:
             assert self.closed_access, self.doi
 
     @property
-    def download_url(self) -> typing.Union[str, None]:
+    def download_url(self) -> Optional[str]:
         return self.download_urls[0] if self.download_urls else None
 
     @property
@@ -168,35 +181,43 @@ class Record:
         """
         :return: The Zenodo recid.
         """
-        return self.doi.replace('10.5281/zenodo.', '')
+        return self.doi.replace("10.5281/zenodo.", "")
 
     @property
-    def version_tag(self) -> typing.Union[None, str]:  # pragma: no cover
+    def version_tag(self) -> Optional[str]:  # pragma: no cover
         return self.version or (self.github_repos.tag if self.github_repos else None)
 
     @classmethod
     def from_dict(cls, d):
         kw = dict(
-            doi=d['doi'],
-            title=d['metadata']['title'],
-            keywords=d['metadata'].get('keywords'),
+            doi=d["doi"],
+            title=d["metadata"]["title"],
+            keywords=d["metadata"].get("keywords"),
             communities=[
-                dd.get('identifier', dd.get('id')) for dd in d['metadata'].get('communities', [])],
-            closed_access=d['metadata']['access_right'] in {'closed', 'restricted'},
-            creators=[c['name'] for c in d['metadata']['creators']],
-            year=d['metadata']['publication_date'].split('-')[0],
-            version=d['metadata'].get('version'),
-            concept_doi=d.get('conceptdoi'),  # There are old records with "concept_rec_id" ...
+                dd.get("identifier", dd.get("id"))
+                for dd in d["metadata"].get("communities", [])
+            ],
+            closed_access=d["metadata"]["access_right"] in {"closed", "restricted"},
+            creators=[c["name"] for c in d["metadata"]["creators"]],
+            year=d["metadata"]["publication_date"].split("-")[0],
+            version=d["metadata"].get("version"),
+            concept_doi=d.get(
+                "conceptdoi"
+            ),  # There are old records with "concept_rec_id" ...
             # FIXME: Check Zenodo API periodically to see whether URLs are correct now.
-            download_urls=[f['links']['self'].replace('/api/', '/') for f in d.get('files')],
-            metadata=d['metadata']
+            download_urls=[
+                f["links"]["self"].replace("/api/", "/") for f in d.get("files")
+            ],
+            metadata=d["metadata"],
         )
-        if 'license' in d['metadata']:
-            lic = d['metadata']['license']
-            kw['license'] = lic if isinstance(lic, str) else lic.get('identifier', lic.get('id'))
-        for ri in d['metadata'].get('related_identifiers', []):
-            if ri['relation'] == 'isSupplementTo':
-                kw['github_repos'] = GithubRepos.from_url(ri['identifier'])
+        if "license" in d["metadata"]:
+            lic = d["metadata"]["license"]
+            kw["license"] = (
+                lic if isinstance(lic, str) else lic.get("identifier", lic.get("id"))
+            )
+        for ri in d["metadata"].get("related_identifiers", []):
+            if ri["relation"] == "isSupplementTo":
+                kw["github_repos"] = GithubRepos.from_url(ri["identifier"])
         return cls(**kw)
 
     @staticmethod
@@ -205,8 +226,8 @@ class Record:
         with urllib.request.urlopen(url) as res:
             if res.code == 200:
                 if log:
-                    log.info('Downloading {}'.format(url))
-                if urlpath.suffix == '.zip':
+                    log.info("Downloading {}".format(url))
+                if urlpath.suffix == ".zip":
                     zipfile.ZipFile(io.BytesIO(res.read())).extractall(path=dest)
                 else:
                     dest.joinpath(urlpath.name).write_bytes(res.read())
@@ -224,14 +245,14 @@ class Record:
         if not dest.exists():
             dest.mkdir()
         if not self.download_urls:
-            raise ValueError('No downloadable resources')  # pragma: no cover
+            raise ValueError("No downloadable resources")  # pragma: no cover
         # Preferentially download from github to not run into Zenodo's rate limit.
         if prefer_github and self.github_repos and self.github_repos.release_url:
             self._download(self.github_repos.release_url, dest, log=log)
         else:
             for url in self.download_urls:
-                if url.endswith('/content'):
-                    url = url[:-len('/content')]  # pragma: no cover
+                if url.endswith("/content"):
+                    url = url[: -len("/content")]  # pragma: no cover
                 self._download(url, dest, log=log)
         inner = list(dest.iterdir())
         if unwrap and is_empty and len(inner) == 1 and inner[0].is_dir():
@@ -249,20 +270,20 @@ class Record:
 
     def get_bibtex(self, bibid=None) -> str:
         src = Source(
-            'misc',
-            bibid or self.doi.split('/')[-1].replace('.', '-'),
-            author=' and '.join(self.creators),
+            "misc",
+            bibid or self.doi.split("/")[-1].replace(".", "-"),
+            author=" and ".join(self.creators),
             title=self.title,
-            keywords=', '.join(self.keywords),
-            publisher='Zenodo',
+            keywords=", ".join(self.keywords),
+            publisher="Zenodo",
             year=self.year,
             edition=self.version,
             doi=self.doi,
-            type='Data set',
-            url='https://doi.org/{}'.format(self.doi),
+            type="Data set",
+            url="https://doi.org/{}".format(self.doi),
         )
         if self.license:
-            src['copyright'] = self.license
+            src["copyright"] = self.license
         return src.bibtex()
 
     @property
@@ -273,8 +294,9 @@ class Record:
         # curl -H "Accept:text/x-bibliography" "https://zenodo.org/api/records/7079637?style=apa
         return api.records(
             id_=self.id,
-            params=dict(style='apa'),
-            headers=dict(Accept='text/x-bibliography')).strip()
+            params=dict(style="apa"),
+            headers=dict(Accept="text/x-bibliography"),
+        ).strip()
 
     # ---------------------------------------------------------------------------------------------
     # legacy API:
@@ -282,14 +304,17 @@ class Record:
     @staticmethod
     def from_doi(doi):  # pragma: no cover
         from cldfzenodo import API
+
         return API.get_record(doi=doi)
 
     @staticmethod
     def from_concept_doi(doi, version_tag=None):  # pragma: no cover
         from cldfzenodo import API
+
         return API.get_record(conceptdoi=doi, version=version_tag)
 
     @property
     def citation(self):  # pragma: no cover
         from cldfzenodo import API
+
         return self.get_citation(API)
