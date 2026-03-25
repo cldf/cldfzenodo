@@ -1,5 +1,12 @@
 # Changes
 
+
+## [2.2.2] - 2026-03-25
+
+Pinned dependencies which are about to get incompatible new major versions.
+Last version of the 2.x series.
+
+
 ## [2.2.1] - 2026-01-13
 
 - Adapt the default page size for API calls to the new limit for unauthenticated requests.
