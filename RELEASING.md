@@ -11,9 +11,10 @@
   pytest -m"integration"
   ```
 
-- Make sure flake8 passes:
+- Make sure flake8 as well as pylint with a score of 10 passes:
   ```shell
   flake8 src
+  pylint src
   ```
 
 - Update the version number, by removing the trailing `.dev0` in:
