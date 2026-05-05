@@ -1,6 +1,6 @@
 # Changes
 
-## Unreleased
+## [3.0.0] - 2026-05-05
 
 - Removed deprecated functionality.
 - Removed dependency on `attrs`.
