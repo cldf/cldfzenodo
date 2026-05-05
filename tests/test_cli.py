@@ -1,19 +1,33 @@
-from cldfbench.__main__ import main
+import argparse
+
+import pytest
+
+from cldfzenodo.commands.download import register, run
 
 
-def test_download(tmp_path, mocker, recwarn):
+@pytest.mark.parametrize(
+    "args,assertion",
+    [
+        (["x"], lambda d: d.joinpath("test").exists()),
+        (["x", "--version-tag", "v1"], None),
+        (["x", "--full-deposit"], None),
+    ],
+)
+def test_download(args, assertion, tmp_path, mocker, recwarn):
     class Record:
         def download_dataset(self, dest):
-            dest.joinpath('test').write_text('abc', encoding='utf8')
+            dest.joinpath("test").write_text("abc", encoding="utf8")
 
         def download(self, dest):
-            dest.joinpath('test').write_text('abc', encoding='utf8')
+            dest.joinpath("test").write_text("abc", encoding="utf8")
 
     class Api:
         def get_record(self, *args, **kw):
             return Record()
 
-    mocker.patch('cldfzenodo.commands.download.API', Api())
-    main(['zenodo.download', 'x', '--directory', str(tmp_path)])
-    assert tmp_path.joinpath('test').exists()
-    main(['zenodo.download', 'x', '--full-deposit', '--directory', str(tmp_path)])
+    mocker.patch("cldfzenodo.commands.download.API", Api())
+    parser = argparse.ArgumentParser()
+    register(parser)
+    run(parser.parse_args(args + ["--directory", str(tmp_path)]))
+    if assertion:
+        assert assertion(tmp_path)

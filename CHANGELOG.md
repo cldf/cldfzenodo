@@ -1,5 +1,10 @@
 # Changes
 
+## Unreleased
+
+- Removed deprecated functionality.
+- Removed dependency on `attrs`.
+
 
 ## [2.2.2] - 2026-03-25
 
