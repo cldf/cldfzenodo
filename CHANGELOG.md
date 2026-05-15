@@ -1,5 +1,11 @@
 # Changes
 
+
+## unreleased
+
+- Support for uploading files for a Zenodo deposit.
+
+
 ## [3.0.0] - 2026-05-05
 
 - Removed deprecated functionality.
