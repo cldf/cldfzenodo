@@ -1,8 +1,7 @@
+import logging
 import argparse
 
 import pytest
-
-from cldfzenodo.commands.download import register, run
 
 
 @pytest.mark.parametrize(
@@ -14,6 +13,7 @@ from cldfzenodo.commands.download import register, run
     ],
 )
 def test_download(args, assertion, tmp_path, mocker, recwarn):
+    from cldfzenodo.commands.download import register, run
     class Record:
         def download_dataset(self, dest):
             dest.joinpath("test").write_text("abc", encoding="utf8")
@@ -31,3 +31,25 @@ def test_download(args, assertion, tmp_path, mocker, recwarn):
     run(parser.parse_args(args + ["--directory", str(tmp_path)]))
     if assertion:
         assert assertion(tmp_path)
+
+
+def test_upload(fixtures_dir, mocker, capsys, caplog):
+    from cldfzenodo.commands.upload import register, run
+    def put(url, **kw):
+        print(url)
+        return mocker.Mock(status_code=201)
+
+    mocker.patch("cldfzenodo.commands.upload.API", lambda *_, **kw: '{"links":{"bucket":"bucket"}}')
+    mocker.patch("cldfzenodo.commands.upload.requests.put", put)
+    mocker.patch("cldfzenodo.commands.upload.os.environ", {"TOKEN": "x"})
+
+    parser = argparse.ArgumentParser()
+    register(parser)
+    args = parser.parse_args(["did", str(fixtures_dir), "TOKEN"])
+    args.log = logging.getLogger(__name__)
+    with caplog.at_level(logging.INFO):
+        run(args)
+    out, _ = capsys.readouterr()
+    assert 'bucket' in out
+    assert 'communities.json' in out
+    assert len(caplog.records) == 6

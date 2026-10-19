@@ -23,7 +23,7 @@ from clldutils.clilib import PathType
 from cldfzenodo.api import API
 
 
-def register(parser):
+def register(parser):  # pylint: disable=C0116
     parser.add_argument(
         'deposit_id',
         help='7-digit ID of the deposit',
@@ -39,7 +39,7 @@ def register(parser):
     )
 
 
-def run(args):
+def run(args):  # pylint: disable=C0116
     r = API(
         'deposit/depositions',
         id_=args.deposit_id,
@@ -50,11 +50,12 @@ def run(args):
     for p in args.upload_dir.iterdir():
         if p.is_file():
             r = requests.put(
-                '%s/%s' % (bucket_url, p.name),
+                f'{bucket_url}/{p.name}',
                 data=p.open('rb'),
                 headers={
                     "Accept": "application/json",
                     "Authorization": f"Bearer {os.environ.get(args.access_token)}",
-                    "Content-Type": "application/octet-stream"}
+                    "Content-Type": "application/octet-stream"},
+                timeout=3600,
             )
             args.log.info('%s\tHTTP %s', p.name, r.status_code)

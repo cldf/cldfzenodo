@@ -4,6 +4,7 @@
 ## unreleased
 
 - Support for uploading files for a Zenodo deposit.
+- Check GitHub repos release before associating it with a Zenodo record.
 
 
 ## [3.0.0] - 2026-05-05

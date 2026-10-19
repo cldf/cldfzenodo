@@ -3,9 +3,9 @@ Zenodo deposit record, as described by the DCAT metadata.
 """
 
 import io
-import logging
 import re
 import shutil
+import logging
 from typing import Optional, Union, Any, Callable, TYPE_CHECKING
 import pathlib
 import zipfile
@@ -13,6 +13,7 @@ import tempfile
 import dataclasses
 import urllib.parse
 import urllib.request
+import warnings
 
 import nameparser
 from pycldf import iter_datasets, Source, Dataset
@@ -223,8 +224,16 @@ class Record:  # pylint: disable=too-many-instance-attributes
             lic = d["metadata"]["license"]
             kw["license"] = lic if isinstance(lic, str) else lic.get("identifier", lic.get("id"))
         for ri in d["metadata"].get("related_identifiers", []):
+            print(ri)
             if ri["relation"] == "isSupplementTo":
-                kw["github_repos"] = GithubRepos.from_url(ri["identifier"])
+                gh = GithubRepos.from_url(ri["identifier"])
+                if gh:
+                    if gh.tag == d["metadata"].get("version"):
+                        kw["github_repos"] = gh
+                    else:
+                        warnings.warn(
+                            f'Related GitHub release with different version: {gh.tag} vs. '
+                            f'{d["metadata"].get("version")}')
         return cls(**kw)
 
     @staticmethod
@@ -262,6 +271,7 @@ class Record:  # pylint: disable=too-many-instance-attributes
             raise ValueError("No downloadable resources")  # pragma: no cover
         # Preferentially download from github to not run into Zenodo's rate limit.
         if prefer_github and self.github_repos and self.github_repos.release_url:
+            print(self.github_repos.release_url)
             self._download(self.github_repos.release_url, dest, log=log)
         else:
             for url in self.download_urls:

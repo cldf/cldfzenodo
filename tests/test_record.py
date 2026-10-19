@@ -64,6 +64,13 @@ def test_Record(record):
     assert rec.id == '4691101'
 
 
+def test_record_from_dict(fixtures_dir):
+    d = json.loads(fixtures_dir.joinpath('record.json').read_text(encoding='utf8'))['hits']['hits'][0]
+    d['metadata']['related_identifiers'][0]['identifier'] = "https://github.com/lexibank/utoaztecan/tree/v1.0"
+    with pytest.warns(UserWarning):
+        Record.from_dict(d)
+
+
 def test_Record_with_external_doi(record_factory):
     assert record_factory('record_with_external_doi.json')
 
