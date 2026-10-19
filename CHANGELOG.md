@@ -1,7 +1,7 @@
 # Changes
 
 
-## unreleased
+## [3.1.0] - 2026-10-19
 
 - Support for uploading files for a Zenodo deposit.
 - Check GitHub repos release before associating it with a Zenodo record.
