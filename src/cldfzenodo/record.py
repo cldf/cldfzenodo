@@ -6,7 +6,7 @@ import io
 import re
 import shutil
 import logging
-from typing import Optional, Union, Any, Callable, TYPE_CHECKING
+from typing import Optional, Any, Callable, TYPE_CHECKING, Self
 import pathlib
 import zipfile
 import tempfile
@@ -166,11 +166,11 @@ class Record:  # pylint: disable=too-many-instance-attributes
 
         formatted = []
         for name in self.creators:
-            name = nameparser.HumanName(name)
-            first = name.first
+            name = nameparser.parse(name)
+            first = name.given
             if name.middle:
                 first += " " + name.middle
-            formatted.append(f"{name.last}, {first}")
+            formatted.append(f"{name.family}, {first}")
         self.creators = formatted
 
         self.communities = [i for i in self.communities if i]
@@ -196,7 +196,7 @@ class Record:  # pylint: disable=too-many-instance-attributes
         return self.version or (self.github_repos.tag if self.github_repos else None)
 
     @classmethod
-    def from_dict(cls, d: dict[str, Any]) -> "Record":
+    def from_dict(cls, d: dict[str, Any]) -> Self:
         """Instantiate a record from the JSON metadata delivered by the Zenodo API."""
         kw = dict(  # pylint: disable=R1735
             doi=d["doi"],
@@ -251,7 +251,7 @@ class Record:  # pylint: disable=too-many-instance-attributes
 
     def download(
             self,
-            dest: Union[str, pathlib.Path],
+            dest: str | pathlib.Path,
             log: Optional[logging.Logger] = None,
             unwrap: bool = True,
             prefer_github: bool = True,
@@ -288,7 +288,7 @@ class Record:  # pylint: disable=too-many-instance-attributes
 
     def download_dataset(
             self,
-            dest: Union[str, pathlib.Path],
+            dest: str | pathlib.Path,
             condition: Optional[Callable[[Dataset], bool]] = None,
             mdname: Optional[str] = None,
             log: Optional[logging.Logger] = None,

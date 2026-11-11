@@ -4,7 +4,6 @@ This module provides an API to retrieve CLDF datasets deposited on Zenodo.
 import re
 import json
 import shlex
-from typing import Optional, Union
 import pathlib
 import subprocess
 import urllib.error
@@ -21,7 +20,7 @@ from cldfzenodo.record import Record, ZENODO_DOI_FORMAT, ZENODO_DOI_PATTERN, get
 __all__ = ["API", "Api", "ZenodoResolver"]
 
 
-def get_hits(res: Union[str, dict, list]) -> list[dict]:
+def get_hits(res: str | dict | list) -> list[dict]:
     """Extract the hits from a search result."""
     if isinstance(res, str):
         res = json.loads(res)
@@ -44,12 +43,11 @@ class Results:  # pylint: disable=R0903
     """Object to step through Zenodo search results."""
 
     def __init__(
-        self,
-        api: "Api",
-        allversions: Optional[bool] = False,
-        community: Optional[str] = None,
-        **params: str,
-    ):
+            self,
+            api: "Api",
+            allversions: bool = False,
+            community: str | None = None,
+            **params: str):
         """
         :param params: URL parameters (see https://developers.zenodo.org/#records)
         """
@@ -94,9 +92,9 @@ class Api:
     def __call__(
         self,
         what: str,
-        id_: Optional[str] = None,
-        params: Optional[dict[str, str]] = None,
-        headers: Optional[dict[str, str]] = None,
+        id_: str | None = None,
+        params: dict[str, str] | None = None,
+        headers: dict[str, str] | None = None,
         _verbose: bool = False,
     ) -> str:
         """
@@ -126,10 +124,10 @@ class Api:
 
     def records(
         self,
-        id_: Optional[str] = None,
-        community: Optional[str] = None,
-        params: Optional[dict[str, str]] = None,
-        headers: Optional[dict[str, str]] = None,
+        id_: str | None = None,
+        community: str | None = None,
+        params: dict[str, str] | None = None,
+        headers: dict[str, str] | None = None,
     ) -> str:
         """
         Perfom an API call to the records resource (possibly limited to one community).
@@ -158,7 +156,7 @@ class Api:
         yield from self.iter_records(conceptdoi=get_doi(conceptdoi), allversions=True)
 
     @staticmethod
-    def _first_record(res) -> Optional[Record]:
+    def _first_record(res) -> Record | None:
         hits = get_hits(res)
         if hits:
             return Record.from_dict(hits[0])
@@ -166,10 +164,10 @@ class Api:
 
     def get_record(
         self,
-        doi: Optional[str] = None,
-        conceptdoi: Optional[str] = None,
-        version: Optional[str] = None,
-    ) -> Optional[Record]:
+        doi: str | None = None,
+        conceptdoi: str | None = None,
+        version: str | None = None,
+    ) -> Record | None:
         """
         Retrieve a record specified by Zenodo DOI, given as URL or plain.
 
@@ -199,11 +197,11 @@ class Api:
 
     def iter_records(
         self,
-        community: Optional[str] = None,
-        keyword: Optional[str] = None,
-        allversions: Optional[bool] = False,
+        community: str | None = None,
+        keyword: str | None = None,
+        allversions: bool = False,
         **kw,
-    ) -> Generator[Record, None, Optional[Results]]:
+    ) -> Generator[Record, None, Results | None]:
         """
         Retrieve records matching various search criteria.
 
@@ -225,8 +223,8 @@ class Api:
         return None
 
     def get_github_release_info(
-        self, repos: str, tag: Optional[str] = None, bibid: Optional[str] = None
-    ) -> tuple[Optional[str], Optional[str], Optional[str], Optional[Source]]:
+        self, repos: str, tag: str | None = None, bibid: str | None = None
+    ) -> tuple[str | None, str | None, str | None, Source | None]:
         """
         Get information about a GitHub repository release that has been archived with Zenodo.
 
@@ -297,7 +295,7 @@ API = Api()
 class ZenodoResolver(DatasetResolver):  # pylint: disable=R0903
     """Resolve location and download CLDF datasets deposited on Zenodo."""
 
-    def __call__(self, loc, download_dir) -> Optional[pathlib.Path]:
+    def __call__(self, loc, download_dir) -> pathlib.Path | None:
         doi = None
         m = ZENODO_DOI_PATTERN.search(loc)
         if m:

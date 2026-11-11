@@ -1,6 +1,11 @@
 # Changes
 
 
+## Unreleased
+
+- Drop py3.9 and py3.10 compat.
+
+
 ## [3.1.0] - 2026-10-19
 
 - Support for uploading files for a Zenodo deposit.
